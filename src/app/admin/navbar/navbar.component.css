@@ -1,0 +1,41 @@
+.navbar {
+    margin: -0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: hsl(220, 35%, 52%); /* Navbar background color */
+    color: white; /* Text color */
+    padding: 0.2rem 2rem; /* Padding for navbar */
+}
+
+.logo {
+    padding: 10px;
+}
+
+.nav-links {
+    padding-right: 10px;
+    display: flex;
+    text-align: center;
+    margin-right: 10rem;
+    gap: 3rem; /* Space between links */
+}
+.nav-links a i {
+    margin-right: 8px; /* Space between icon and text */
+}
+.nav-links a {
+    color: white; /* Link color */
+    text-decoration: none; /* Remove underline */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Padding for links */
+    transition: background-color 0.3s ease;
+    font-size: larger;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white; /* Link color */
+    text-decoration: none; /* No underline */
+    transition: color 0.3s; /* Transition effect for hover */
+}
+
+.nav-links a:hover {
+    background-color: grey; /* Lighter shade on hover */
+}

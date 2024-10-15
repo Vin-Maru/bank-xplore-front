@@ -1,0 +1,26 @@
+/* Container that holds the entire dashboard */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Flexbox for the main content: sidebar and dynamic content */
+.dashboard-content {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar styling */
+app-sidebar {
+  width: auto; /* Adjust the sidebar width as needed */
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+/* Main content (where the routed components will appear) */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color:azure;
+}
