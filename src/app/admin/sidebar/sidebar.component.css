@@ -1,10 +1,13 @@
 .sidebar {
-  
+
     width: 160px;
+    border-radius: 10px;
+    margin-top: 40px;
+    
     height: auto;
     background-color: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
     color: white; /* Text color */
-    position: fixed;
+    position:relative;
     transition: width 0.6s ease, opacity 0.3s ease;
     overflow: hidden; /* Hide overflow */
   }
@@ -14,13 +17,14 @@
   }
   
   .btn-toggle {
-    margin-left: 10px;
+    padding: 10px;
+    margin: 20px;
     background: blue;
     border: none;
     color: white;
     cursor: pointer;
     font-size: 1.5rem;
-    margin: 5px;
+  
   }
   
   .nav {
@@ -56,5 +60,15 @@
   
   .sidebar.collapsed .nav-link span {
     display: none; /* Hide text when collapsed */
+  }
+  .dashboard-content {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: row; /* Align children in a row */
+    margin-left: 10px; /* Optional margin to separate from sidebar */
+  }
+  
+  .main-content {
+    flex-grow: 1; /* Allow main content to take the remaining space */
+    padding: 20px; /* Add some padding to main content */
   }
   

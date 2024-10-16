@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { UserManagementComponent } from '../user-management/user-management.component';
+import { Component, OnInit } from '@angular/core';
+
 @Component({
+  standalone:true,
   selector: 'app-dashboard',
-  standalone: true,
-  imports: [NavbarComponent, RouterOutlet, SidebarComponent, UserManagementComponent],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'] // Changed styleUrl to styleUrls (plural)
+  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-  // You can add methods or properties here if needed in the future
+export class DashboardComponent implements OnInit {
+  numberOfUsers: number = 0;
+  numberOfNotifications: number = 0;
+  totalTransactions: number = 0;
+  usersWaitingApproval: number = 0;  // New property for users waiting approval
+
+  constructor() {}
+
+  ngOnInit() {
+    // Replace these with actual data from a service or API
+    this.numberOfUsers = 150; // Example data
+    this.numberOfNotifications = 10; // Example data
+    this.totalTransactions = 500; // Example data
+    this.usersWaitingApproval = 5; // Example data for users waiting approval
+  }
 }

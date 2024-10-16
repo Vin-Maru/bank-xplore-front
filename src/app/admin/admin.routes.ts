@@ -1,23 +1,25 @@
-// src/app/admin/admin.routes.ts
-
-// src/app/admin/admin.routes.ts
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component'; // Assuming this is your login component
-import { AdminComponent } from './admin.component';
+import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin.component';  // Admin layout component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserManagementComponent } from './user-management/user-management.component';
-
-
+import { Component } from '@angular/core';
+import { TransactionComponent } from './transaction/transaction.component';
+import { LogoutComponent } from './logout/logout.component';
 
 export const adminRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Default route for admin
+  { path: '', redirectTo: 'login', pathMatch: 'full' },  // Default route
 
-  { path: 'login', component: LoginComponent }, // Admin login route
-
-  { path: 'dashboard', component: DashboardComponent },    
-  { path: 'user', component: UserManagementComponent }    
-
+  { path: 'login', component: LoginComponent },  // Login route
+  
+  {
+    path: '',  // Empty path to indicate admin base
+    component: AdminComponent,  // Admin layout wrapper
+    children: [
+      { path: 'dashboard', component: DashboardComponent },  // Dashboard route inside admin layout
+      { path: 'user-management', component: UserManagementComponent },  // User management route
+      {path: 'transaction', component: TransactionComponent},
+      {path: 'logout', component: LogoutComponent}
+    ]
+  }
 ];
-
-
-

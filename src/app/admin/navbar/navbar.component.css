@@ -1,41 +1,44 @@
 .navbar {
-    margin: -0.3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: hsl(220, 35%, 52%); /* Navbar background color */
-    color: white; /* Text color */
-    padding: 0.2rem 2rem; /* Padding for navbar */
+    
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and links */
+    align-items: center; /* Center items vertically */
+    background-color:  rgb(23, 151, 202); /* Semi-transparent background */
+    padding: 10px 20px; /* Padding around the navbar */
+    position:fixed; /* Fix position on the top */
+    top: 0; /* Position at the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    transition: top 0.3s; /* Smooth transition for the scroll effect */
+    z-index: 1000; /* Ensure it's on top of other content */
 }
 
 .logo {
-    padding: 10px;
+    flex-shrink: 0; /* Prevent logo from shrinking */
 }
 
 .nav-links {
-    padding-right: 10px;
-    display: flex;
-    text-align: center;
-    margin-right: 10rem;
-    gap: 3rem; /* Space between links */
+    display: flex; /* Align links in a row */
+    gap: 15px; /* Space between links */
 }
-.nav-links a i {
-    margin-right: 8px; /* Space between icon and text */
-}
+
 .nav-links a {
-    color: white; /* Link color */
+    color: white; /* Text color */
     text-decoration: none; /* Remove underline */
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    padding: 15px; /* Padding for links */
-    transition: background-color 0.3s ease;
-    font-size: larger;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white; /* Link color */
-    text-decoration: none; /* No underline */
-    transition: color 0.3s; /* Transition effect for hover */
+    padding: 10px; /* Padding around links */
+    transition: background-color 0.3s; /* Transition for hover effect */
 }
 
 .nav-links a:hover {
-    background-color: grey; /* Lighter shade on hover */
+    background-color: gray; /* Light hover effect */
+}
+
+body {
+    margin: 0; /* Remove default margin */
+    padding-top: 60px; /* Space for fixed navbar */
+}
+
+.main-content {
+    padding: 20px; /* Add padding to the main content area */
+    /* Other styles for your main content */
 }

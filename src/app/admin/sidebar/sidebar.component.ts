@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { LogoutComponent } from '../logout/logout.component';
+
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterOutlet], // Add CommonModule to imports
+  imports: [LogoutComponent, CommonModule, RouterModule], // Add CommonModule to imports
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })

@@ -31,4 +31,10 @@
     </div>
     <button type="submit" class="btn btn-login" (click)="login()">Login</button>
   </form>
+  <div class="overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Logging in, please wait...</p>
+  </div>
+
+
 </div>

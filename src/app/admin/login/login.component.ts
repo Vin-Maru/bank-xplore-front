@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
-import { CommonModule } from '@angular/common'; // Import CommonModule for ngIf
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -11,12 +11,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule], // Ensure HttpClientModule is imported here
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule],
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
+  isLoading: boolean = false;  // New state for loading
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -24,17 +25,24 @@ export class LoginComponent {
     // Simulate dummy credentials
     const dummyUsername = 'admin';
     const dummyPassword = 'admin123';
-  
+
     // Check if the username and password entered by the user match the dummy values
     if (this.username === dummyUsername && this.password === dummyPassword) {
-      // Simulate successful login
-      console.log('Login successful');
-      this.router.navigate(['admin/dashboard']); // Redirect to the dashboard
+      // Start loading animation only when the login is successful
+      this.isLoading = true;
+
+      // Simulate a delay for the login process (after successful login)
+      setTimeout(() => {
+        console.log('Login successful');
+        this.router.navigate(['/admin/dashboard']); // Redirect to the dashboard
+      }, 500); // 1-second delay to simulate loading
     } else {
       // Simulate login failure
       this.errorMessage = 'Invalid username or password';
     }
   }
+}
+
   
 
 
@@ -56,4 +64,4 @@ export class LoginComponent {
       this.errorMessage = 'Please fill in both fields';
     }
   }
-}*/}
+}*/
