@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 import { TransactionComponent } from './transaction/transaction.component';
 import { LogoutComponent } from './logout/logout.component';
 
+
+
 export const adminRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // Default route
 

@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule],
 })
 export class LoginComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
   errorMessage: string = '';
   isLoading: boolean = false;  // New state for loading
@@ -22,46 +22,37 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    // Simulate dummy credentials
-    const dummyUsername = 'admin';
-    const dummyPassword = 'admin123';
-
-    // Check if the username and password entered by the user match the dummy values
-    if (this.username === dummyUsername && this.password === dummyPassword) {
-      // Start loading animation only when the login is successful
-      this.isLoading = true;
-
-      // Simulate a delay for the login process (after successful login)
-      setTimeout(() => {
-        console.log('Login successful');
-        this.router.navigate(['/admin/dashboard']); // Redirect to the dashboard
-      }, 500); // 1-second delay to simulate loading
-    } else {
-      // Simulate login failure
-      this.errorMessage = 'Invalid username or password';
-    }
-  }
-}
-
+    if (this.email && this.password) {
+      const loginUrl = 'http://172.179.51.100:8080/kyc/auth/login'; // Set your API endpoint here
   
-
-
- /*login() {
-    if (this.username && this.password) {
-      const loginUrl = 'http://localhost:5000/api/login'; // Set your API endpoint here
-
-      this.http.post(loginUrl, { username: this.username, password: this.password })
+      this.http.post(loginUrl, { email: this.email, password: this.password })
         .subscribe({
           next: (response: any) => {
-            this.router.navigate(['/dashboard']); // Redirect to dashboard on success
+            // Clear any existing error messages
+            this.errorMessage = '';
+  
+            // Assuming successful response, redirect to dashboard
+            this.router.navigate(['/dashboard']);
           },
           error: (err) => {
-            this.errorMessage = 'Invalid username or password';
-            console.error(err);
+            // Check for specific error cases
+            if (err.status === 401) {
+              this.errorMessage = 'Unauthorized: Incorrect email or password';
+            } else if (err.status === 400) {
+              this.errorMessage = 'Bad Request: Please check your input';
+            } else if (err.status === 500) {
+              this.errorMessage = 'Server error: Please try again later';
+            } else {
+              this.errorMessage = 'An unexpected error occurred. Please try again.';
+            }
+  
+            // Log the error for debugging
+            console.error('Login error:', err);
           }
         });
     } else {
-      this.errorMessage = 'Please fill in both fields';
+      // If fields are missing, set an error message
+      this.errorMessage = 'Please fill in both email and password';
     }
   }
-}*/
+}

@@ -6,14 +6,14 @@
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="email">email</label>
       <input 
         type="text" 
-        id="username" 
-        placeholder="Username"
+        id="email" 
+        placeholder="email"
         required 
-        [(ngModel)]="username" 
-        name="username" 
+        [(ngModel)]="email" 
+        name="email" 
         class="form-control" 
       />
     </div>
