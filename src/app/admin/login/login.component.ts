@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -20,22 +24,23 @@ export class LoginComponent {
   isLoading: boolean = false;  // New state for loading
 
   constructor(private http: HttpClient, private router: Router) {}
-
+  
+  
   login() {
     if (this.email && this.password) {
-      const loginUrl = 'http://172.179.51.100:8080/kyc/auth/login'; // Set your API endpoint here
+      const loginUrl = 'http://172.179.51.100:8080/kyc/auth/login';
   
-      this.http.post(loginUrl, { email: this.email, password: this.password })
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
+  
+      this.http.post(loginUrl, { email: this.email, password: this.password }, { headers })
         .subscribe({
           next: (response: any) => {
-            // Clear any existing error messages
             this.errorMessage = '';
-  
-            // Assuming successful response, redirect to dashboard
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/admin/dashboard']);
           },
           error: (err) => {
-            // Check for specific error cases
             if (err.status === 401) {
               this.errorMessage = 'Unauthorized: Incorrect email or password';
             } else if (err.status === 400) {
@@ -45,13 +50,10 @@ export class LoginComponent {
             } else {
               this.errorMessage = 'An unexpected error occurred. Please try again.';
             }
-  
-            // Log the error for debugging
             console.error('Login error:', err);
           }
         });
     } else {
-      // If fields are missing, set an error message
       this.errorMessage = 'Please fill in both email and password';
     }
   }

@@ -6,6 +6,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { Component } from '@angular/core';
 import { TransactionComponent } from './transaction/transaction.component';
 import { LogoutComponent } from './logout/logout.component';
+import { AddBankComponent } from './add-bank/add-bank.component';
 
 
 
@@ -21,7 +22,9 @@ export const adminRoutes: Routes = [
       { path: 'dashboard', component: DashboardComponent },  // Dashboard route inside admin layout
       { path: 'user-management', component: UserManagementComponent },  // User management route
       {path: 'transaction', component: TransactionComponent},
-      {path: 'logout', component: LogoutComponent}
+      {path: 'logout', component: LogoutComponent},
+      {path: 'add-bank', component: AddBankComponent}
+
     ]
   }
 ];

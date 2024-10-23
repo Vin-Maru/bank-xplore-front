@@ -1,44 +1,75 @@
-import { Component } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common'; // Import necessary directives for structural templates
-import { FormsModule } from '@angular/forms';  // Import forms module if you plan to use NgModel or other form-related functionalities
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
-  imports: [NgFor, NgIf, FormsModule,RouterOutlet] // Declare necessary imports here
+  imports: [NgFor, NgIf, FormsModule, RouterOutlet, HttpClientModule]
 })
-export class UserManagementComponent {
-  allUsers = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Logged In' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'Pending Approval' },
-    // Add more user data
-  ];
+export class UserManagementComponent implements OnInit {
+  allUsers: any[] = [];  // Initially empty, will be filled with API data
+  searchTerm: string = ''; // Declare searchTerm property
 
-  get loggedInUsers() {
-    return this.allUsers.filter(user => user.status === 'Logged In');
+  constructor(private http: HttpClient) { } // Inject HttpClient
+
+  ngOnInit(): void {
+    this.fetchUsers();
   }
 
-  get pendingApprovalUsers() {
-    return this.allUsers.filter(user => user.status === 'Pending Approval');
+  fetchUsers(): void {
+    this.http.get<any>('http://172.179.51.100:8080/kyc/all-users').subscribe(
+      (response) => {
+        if (response && Array.isArray(response.payload)) {
+          this.allUsers = response.payload; // Correctly assign the payload to allUsers
+        } else {
+          console.error('Unexpected response structure:', response);
+        }
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+  }
+
+  get filteredUsers() {
+    if (!this.searchTerm) {
+      return this.allUsers; // Return all users if no search term is provided
+    }
+    return this.allUsers.filter(user => 
+      user.phone_no.includes(this.searchTerm) // Adjust this based on your needs
+    );
   }
 
   approveUser(user: any) {
-    // Update the user's status to 'Logged In'
-    user.status = 'Logged In';
-    console.log(`${user.name} has been approved.`);
-    // Optionally, you can add logic to remove the user from pending approval if needed
+    this.http.put(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`, { status: 'Logged In' }).subscribe(
+      (response) => {
+        user.account_status = 'Logged In';
+        console.log(`${user.first_name} has been approved.`);
+      },
+      (error) => {
+        console.error('Error approving user:', error);
+      }
+    );
   }
 
   declineUser(user: any) {
-    // Remove the user from the pending approval list or change status
-    const index = this.allUsers.indexOf(user);
-    if (index > -1) {
-      // Here you can choose to remove the user or change the status
-      this.allUsers.splice(index, 1); // This removes the user
-      console.log(`${user.name} has been declined.`);
-    }
+    this.http.delete(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`).subscribe(
+      (response) => {
+        const index = this.allUsers.indexOf(user);
+        if (index > -1) {
+          this.allUsers.splice(index, 1); // Remove the user from the list
+          console.log(`${user.first_name} has been declined.`);
+        }
+      },
+      (error) => {
+        console.error('Error declining user:', error);
+      }
+    );
   }
 }

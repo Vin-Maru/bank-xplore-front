@@ -1,20 +1,38 @@
-<nav class="navbar">
-    <div class="logo">
-        <img src="/assets/logo.png" alt="Bank-Xplore Logo" class="logo" />
-    </div>
-    <div class="nav-links">
-        <a routerLink="/admin/dashboard">
-            <i class="bi bi-house-door-fill"></i> Dashboard
-        </a>
-        <a routerLink="/admin/user-management">
-            <i class="bi bi-person-fill"></i> User Managment
-        
-        </a>
-        <a routerLink="/admin/transaction">
-            <i class="bi bi-receipt-cutoff"></i> Transactions
-        </a>
-        <a routerLink="/notifications">
-            <i class="bi bi-bell-fill"></i> Notifications
-        </a>
-    </div>
+<nav [ngStyle]="navbarStyle" class="navbar">
+  <div class="logo">
+    <img src="/assets/logo.png" alt="Bank-Xplore Logo" class="logo-img" />
+    <span>{{ title }}</span>
+  </div>
+
+  <!-- Toggle Button (Hamburger Icon) -->
+  <div class="menu-toggle" (mouseenter)="openMenu()" (mouseleave)="closeMenuIfNotClicked($event)">
+    <i class="bi bi-list"></i> <!-- Bootstrap icon for hamburger menu -->
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="nav-links" [ngClass]="{'active': isMenuOpen}">
+    <a (click)="closeMenu()" routerLink="/admin/dashboard">
+      <i class="bi bi-house-door-fill"></i> Dashboard
+    </a>
+
+    <a (click)="closeMenu()" routerLink="/admin/user-management">
+      <i class="bi bi-person-fill"></i> Manage Users
+    </a>
+
+    <a (click)="closeMenu()" routerLink="/admin/add-bank">
+      <i class="bi bi-bank"></i> Add Bank
+    </a>
+
+    <a (click)="closeMenu()" routerLink="/admin/transaction">
+      <i class="bi bi-receipt-cutoff"></i> Transactions
+    </a>
+    
+    <a (click)="closeMenu()" routerLink="/notifications">
+      <i class="bi bi-bell-fill"></i> Notifications
+    </a>
+    
+    <a (click)="closeMenu()" routerLink="/admin/logout">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
 </nav>

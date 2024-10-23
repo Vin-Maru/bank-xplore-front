@@ -7,7 +7,7 @@
     height: auto;
     background-color: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
     color: white; /* Text color */
-    position:relative;
+    position: absolute;
     transition: width 0.6s ease, opacity 0.3s ease;
     overflow: hidden; /* Hide overflow */
   }

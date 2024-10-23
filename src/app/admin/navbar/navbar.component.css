@@ -1,44 +1,132 @@
+/* General Navbar Styles */
 .navbar {
-    
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space between logo and links */
-    align-items: center; /* Center items vertically */
-    background-color:  rgb(23, 151, 202); /* Semi-transparent background */
-    padding: 10px 20px; /* Padding around the navbar */
-    position:fixed; /* Fix position on the top */
-    top: 0; /* Position at the top */
-    left: 0; /* Align to the left */
-    width: 100%; /* Full width */
-    transition: top 0.3s; /* Smooth transition for the scroll effect */
-    z-index: 1000; /* Ensure it's on top of other content */
+ 
+  color: antiquewhite;
+  margin: 5px;
+
+  margin-bottom: 0%;
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1daddd; /* Set your light blue background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Optional shadow effect */
 }
 
-.logo {
-    flex-shrink: 0; /* Prevent logo from shrinking */
+.logo-img {
+  height: 60px; /* Adjust logo size if necessary */
+  margin-right: 10px;
 }
+
 
 .nav-links {
-    display: flex; /* Align links in a row */
-    gap: 15px; /* Space between links */
+  display: flex;
+  gap: 80px;
+ 
+}
+.nav-links :hover {
+  background-color: gray;
+  border-radius: 5px;
+  /* Instead of padding change, you can add a slight scale transformation */
+  transform: scale(1.05); /* Slightly scales up the element */
+  transition: transform 0.8s ease, background-color 0.8s ease;
 }
 
 .nav-links a {
-    color: white; /* Text color */
-    text-decoration: none; /* Remove underline */
-    padding: 10px; /* Padding around links */
-    transition: background-color 0.3s; /* Transition for hover effect */
+ 
+  color: aliceblue;
+  align-items: center;
+  text-decoration: none;
+  font-size: 18px;
 }
 
-.nav-links a:hover {
-    background-color: gray; /* Light hover effect */
+.nav-links a i {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 18px;
 }
 
-body {
-    margin: 0; /* Remove default margin */
-    padding-top: 60px; /* Space for fixed navbar */
+.menu-toggle {
+  display: none; /* Hide toggle button on large screens */
+  font-size: 24px;
+  cursor: pointer;
+ 
 }
 
-.main-content {
-    padding: 20px; /* Add padding to the main content area */
-    /* Other styles for your main content */
+/* Media Queries for Small Screens */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    position:absolute;
+    top: 60px;
+    background-color:#4747be;
+    right: 0;
+    width: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Show nav links when 'active' class is applied */
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* Show the menu toggle button on small screens */
+  .menu-toggle {
+    display: block;
+   
+  }
+}
+
+.nav-item.dropdown {
+  position: relative; /* Make sure the dropdown menu positions correctly */
+}
+
+/* Remove hover effect for Management link */
+.nav-item.dropdown > .nav-link {
+  pointer-events: none; /* Disable hover effects for the Management link */
+}
+
+.dropdown-menu {
+  display: none; /* Initially hide the dropdown */
+  position: absolute; /* Position it relative to the parent */
+  background-color: #4747be; /* Background color for the dropdown */
+  border: 3px solid #ddd; /* Border for visibility */
+  border-radius: 4px; /* Slightly rounded corners */
+  z-index: 1000; /* Ensure it appears above other elements */
+  opacity: 0; /* Start hidden */
+  transition: opacity 1s ease, transform 0.7s ease; /* Transition for smooth effect */
+  transform: translateY(-10px); /* Start slightly above */
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block; /* Show dropdown on hover */
+  opacity: 1; /* Fade in */
+  transform: translateY(0); /* Move into place */
+}
+
+.dropdown-item {
+  padding: 8px 12px; /* Smaller padding for compact size */
+  text-decoration: none; /* Remove underline */
+  color: #fff; /* Set text color to white for better contrast */
+  font-size: 14px; /* Smaller font size */
+}
+
+/* Keep the active dropdown item grey */
+.dropdown-item.active {
+  background-color: gray; /* Keep active item highlighted */
+}
+
+/* Highlight on hover */
+.dropdown-item:hover {
+  padding: 5px;
+  background-color: darkgray; /* Change to dark gray on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Remove bullet points */
+.nav-item {
+  list-style: none; /* Remove dot (list-style) */
 }

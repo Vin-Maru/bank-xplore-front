@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Add Bank</h2>
+    <form [formGroup]="addBankForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">Bank Full Name</label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div *ngIf="addBankForm.get('firstName')?.invalid && addBankForm.get('firstName')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('firstName')?.errors?.['required']">Bank name is required.</small>
+          <small *ngIf="addBankForm.get('firstName')?.errors?.['minlength']">Bank name must be at least 3 characters long.</small>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+        <div *ngIf="addBankForm.get('email')?.invalid && addBankForm.get('email')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="addBankForm.get('email')?.errors?.['email']">Invalid email format.</small>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" formControlName="password">
+        <div *ngIf="addBankForm.get('password')?.invalid && addBankForm.get('password')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="addBankForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="addBankForm.invalid">Add Bank</button>
+    </form>
+  </div>
+  
