@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-
 
 @Component({
   standalone:true,
@@ -14,25 +12,14 @@ export class DashboardComponent implements OnInit {
   totalTransactions: number = 0;
   usersWaitingApproval: number = 0;  // New property for users waiting approval
 
-  constructor(private userService: UserService) {} // Inject UserService here
+  constructor() {}
 
   ngOnInit() {
     // Replace these with actual data from a service or API
-    this.loadUserData(); // Load user data on initialization
+    this.numberOfUsers = 150; // Example data
     this.numberOfNotifications = 10; // Example data
     this.totalTransactions = 500; // Example data
     this.usersWaitingApproval = 5; // Example data for users waiting approval
    
-  }
-   // Method to load user data from the API
-   loadUserData() {
-    this.userService.getUsers().subscribe(
-      (users) => {
-        this.numberOfUsers = users.length;  // Update number of users based on API response
-      },
-      (error) => {
-        console.error('Error fetching users', error);
-      }
-    );
   }
 }

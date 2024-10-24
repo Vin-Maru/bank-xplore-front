@@ -1,5 +1,4 @@
 /* Container for the login form */
-
 body {
   display: flex;
   justify-content: center;
@@ -17,109 +16,118 @@ body {
   padding: 2rem;
   background-color: #ffffff; /* Background color for the form */
   border-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 5); /* Adjust shadow for better visibility */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 2); /* Adjust shadow for better visibility */
   text-align: center; /* Centering text */
 }
-  
-  
-  /* Logo styling */
-  .logo {
-    max-width: 100px; /* Adjust logo size */
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Title styling */
-  .login-title {
-    color: #052A71; /* Dark blue color for title */
-    margin-bottom: 1.7rem;
-  }
-  
-  /* Form group styling */
-  .form-group {
-    margin-bottom: 0.5rem;
-    font-size: large;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    
-  }
-  
-  /* Input field styling */
-  .form-control {
-   
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 6px 178px 6px 14px;
-        gap: 5px;
 
-        width: 150px;
-        height: 30px;
+/* Logo styling */
+.logo {
+  max-width: 100px; /* Adjust logo size */
+  margin-bottom: 0.5rem;
+}
 
-        background: #E5EAFF;
-        border-radius: 8px;
+/* Title styling */
+.login-title {
+  color: #052A71; /* Dark blue color for title */
+  margin-bottom: 1.7rem;
+}
 
-        /* Inside auto layout */
-        flex: none;
-        order: 0;
-        align-self: stretch;
-        flex-grow: 0;
+/* Form group styling */
+.form-group {
+  margin-bottom: 0.5rem;
+  font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
-    width: 100%; /* Full width */
-    padding: 0.5rem; /* Padding */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 4px; /* Rounded corners */
-  }
-  /* Button styling */
-  .btn-login {
+/* Input field styling */
+.form-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 178px 6px 14px;
+  gap: 5px;
 
-        display:block;
-        justify-content: center;
-        align-items: center;
-        padding: 6px 60px;
-        margin-left: 100px;
-        padding-left: 50px;
-        gap: 10px;
-        color: aliceblue;
-        font-family: baloon 2;
-        font-size: 20px;
+  width: 150px;
+  height: 30px;
 
-        width: 150px;
-        height: 47px;
+  background: #E5EAFF;
+  border-radius: 8px;
 
-        background: #052A71;
-        border-radius: 8px;
-  }
-  
-  .btn-login:hover {
-    background-color: #040f4e; /* Darker shade on hover */
-  }
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; /* Ensure it's above other content */
-  }
-  
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    border-top: 4px solid #3498db;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  p {
-    margin-top: 20px;
-    font-size: 16px;
-    color: blue;
-  }
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+  width: 100%; /* Full width */
+  padding: 0.5rem; /* Padding */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Button styling */
+.btn-login {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 60px;
+  margin-left: 100px;
+  padding-left: 50px;
+  gap: 10px;
+  color: aliceblue;
+  font-family: baloon 2;
+  font-size: 20px;
+
+  width: 150px;
+  height: 47px;
+
+  background: #052A71;
+  border-radius: 8px;
+}
+
+.btn-login:hover {
+  background-color: #040f4e; /* Darker shade on hover */
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Loading overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+/* Spinner animation */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading text */
+p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: blue;
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -23,10 +23,24 @@ export class UserManagementComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.http.get<any>('http://172.179.51.100:8080/kyc/all-users').subscribe(
+    const token = localStorage.getItem('authToken'); // Get the token from local storage
+
+    const headers = new HttpHeaders({
+      'Authorization': `keyring_0 ${token}`, // Include the token in the Authorization header
+      'Content-Type': 'application/json',
+    });
+
+    this.http.get<any>('http://172.179.51.100:8080/kyc/all-users', { headers }).subscribe(
       (response) => {
         if (response && Array.isArray(response.payload)) {
           this.allUsers = response.payload; // Correctly assign the payload to allUsers
+          this.allUsers.forEach(user => {
+            if(user.email){this.fetchUserDocuments(user.email);
+            }
+            else {
+              console.error('Email is missing for user:', user);
+            }
+          });
         } else {
           console.error('Unexpected response structure:', response);
         }
@@ -36,6 +50,26 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
+
+  fetchUserDocuments(email: string): void {
+    // Fetch documents without token validation
+    this.http.get<any>(`http://172.179.51.100:8080/kyc/admin/all-users`).subscribe(
+      (response) => {
+        if (response && response.documents) {
+          const user = this.allUsers.find(u => u.email === email); // Find the user by email
+          if (user) {
+            user.documents = response.documents; // Attach documents to the user object
+          }
+        } else {
+          console.error('No documents found for the user:', email);
+        }
+      },
+      (error) => {
+        console.error('Error fetching documents for user:', error);
+      }
+    );
+}
+
 
   get filteredUsers() {
     if (!this.searchTerm) {
@@ -47,7 +81,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   approveUser(user: any) {
-    this.http.put(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`, { status: 'Logged In' }).subscribe(
+    const token = localStorage.getItem('authToken'); // Get the token from local storage
+
+    const headers = new HttpHeaders({
+      'Authorization': `keyring_0 ${token}`, // Include the token in the Authorization header
+      'Content-Type': 'application/json',
+    });
+
+    this.http.put(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`, { status: 'Logged In' }, { headers }).subscribe(
       (response) => {
         user.account_status = 'Logged In';
         console.log(`${user.first_name} has been approved.`);
@@ -59,7 +100,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   declineUser(user: any) {
-    this.http.delete(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`).subscribe(
+    const token = localStorage.getItem('authToken'); // Get the token from local storage
+
+    const headers = new HttpHeaders({
+      'Authorization': `keyring_0 ${token}`, // Include the token in the Authorization header
+      'Content-Type': 'application/json',
+    });
+
+    this.http.delete(`http://172.179.51.100:8080/kyc/all-users/${user.user_id}`, { headers }).subscribe(
       (response) => {
         const index = this.allUsers.indexOf(user);
         if (index > -1) {

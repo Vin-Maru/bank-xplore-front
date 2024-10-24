@@ -1,13 +1,11 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { AdminComponent } from './admin.component';  // Admin layout component
+import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserManagementComponent } from './user-management/user-management.component';
-import { Component } from '@angular/core';
 import { TransactionComponent } from './transaction/transaction.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
-
 
 
 export const adminRoutes: Routes = [
@@ -19,12 +17,11 @@ export const adminRoutes: Routes = [
     path: '',  // Empty path to indicate admin base
     component: AdminComponent,  // Admin layout wrapper
     children: [
-      { path: 'dashboard', component: DashboardComponent },  // Dashboard route inside admin layout
-      { path: 'user-management', component: UserManagementComponent },  // User management route
-      {path: 'transaction', component: TransactionComponent},
-      {path: 'logout', component: LogoutComponent},
-      {path: 'add-bank', component: AddBankComponent}
-
+      { path: 'dashboard', component: DashboardComponent,},  // Protect this route with authGuard
+      { path: 'user-management', component: UserManagementComponent,},  // Protect this route with authGuard
+      { path: 'transaction', component: TransactionComponent,},  // Protect this route with authGuard
+      { path: 'logout', component: LogoutComponent,},  // Protect this route with authGuard
+      { path: 'add-bank', component: AddBankComponent,}  // Protect this route with authGuard
     ]
   }
 ];

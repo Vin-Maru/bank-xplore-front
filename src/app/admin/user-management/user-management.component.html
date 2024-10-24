@@ -17,6 +17,7 @@
           <th>Email</th>
           <th>Phone Number</th>
           <th>Password</th>
+          <th>Documents</th> <!-- New column for documents -->
           <th>Actions</th>
         </tr>
       </thead>
@@ -29,6 +30,13 @@
           <td>{{ user.email }}</td>
           <td>{{ user.phone_no }}</td>
           <td>{{ user.password }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let doc of user.documents">
+                {{ doc.document_name }} - <a [href]="doc.document_url" target="_blank">View Document</a>
+              </li>
+            </ul>
+          </td>
           <td>
             <div class="button-container"> <!-- Use the new CSS class -->
               <button class="btn btn-info" (click)="approveUser(user)">Approve</button>
