@@ -1,0 +1,77 @@
+.user-details-card {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #333; /* Black background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Softer shadow */
+  color: #fff; /* Text color */
+}
+
+.user-details-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff; /* White text for headings */
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #555; /* Lighter border for better visibility */
+}
+
+.info-group label {
+  font-weight: bold;
+  color: #f0f0f0; /* Light grey for labels */
+}
+
+.info-group span {
+  color: #ccc; /* Slightly lighter grey for values */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  gap: 120px;
+}
+
+.approve, .decline {
+ 
+    color: white;            /* Text color */
+    padding: 10px 15px;     /* Add padding */
+    border: none;           /* Remove default border */
+    border-radius: 5px;     /* Rounded corners */
+    cursor: pointer;         /* Pointer cursor on hover */
+    font-size: 16px;        /* Font size */
+    transition: background-color 0.7s; /* Smooth transition */
+
+  
+}
+
+.approve {
+  background-color: darkgreen;
+  color: #fff;
+}
+
+.approve:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.decline {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.decline:hover {
+  background-color: darkred; /* Darker red on hover */
+}
+

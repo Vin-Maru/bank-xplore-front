@@ -24,7 +24,7 @@ export class LoginComponent {
   login() {
     if (this.email && this.password) {
       this.isLoading = true;  // Set loading state to true
-      const loginUrl = 'http://172.179.51.100:8080/kyc/auth/login';
+      const loginUrl = 'http://34.28.208.64:8080/kyc/auth/login';
 
       this.http.post(loginUrl, { email: this.email, password: this.password })
         .subscribe({

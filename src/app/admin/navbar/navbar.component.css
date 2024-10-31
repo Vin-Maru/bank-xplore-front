@@ -3,13 +3,12 @@
  
   color: antiquewhite;
   margin: 5px;
-
   margin-bottom: 0%;
   border-radius: 5px;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #1daddd; /* Set your light blue background color */
+  background-color: #081a20; /* Set your light blue background color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Optional shadow effect */
 }
 
@@ -60,10 +59,11 @@
     gap: 10px;
     position:absolute;
     top: 60px;
-    background-color:#4747be;
+    background-color:#031518;
     right: 0;
     width: auto;
     padding: 20px;
+    z-index: 1000;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   }

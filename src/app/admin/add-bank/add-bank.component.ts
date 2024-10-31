@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-add-bank',
   standalone: true,
+  styleUrl:'./add-bank.component.css',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-bank.component.html',
 })

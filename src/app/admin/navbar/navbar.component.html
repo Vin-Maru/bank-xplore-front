@@ -5,12 +5,12 @@
   </div>
 
   <!-- Toggle Button (Hamburger Icon) -->
-  <div class="menu-toggle" (mouseenter)="openMenu()" (mouseleave)="closeMenuIfNotClicked($event)">
+  <div class="menu-toggle" (mouseenter)="openMenu()">
     <i class="bi bi-list"></i> <!-- Bootstrap icon for hamburger menu -->
   </div>
 
   <!-- Navigation Links -->
-  <div class="nav-links" [ngClass]="{'active': isMenuOpen}">
+  <div class="nav-links" [ngClass]="{'active': isMenuOpen}" (mouseleave)="closeMenuIfNotClicked($event)">
     <a (click)="closeMenu()" routerLink="/admin/dashboard">
       <i class="bi bi-house-door-fill"></i> Dashboard
     </a>

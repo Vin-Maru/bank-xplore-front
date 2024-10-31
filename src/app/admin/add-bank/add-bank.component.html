@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Add Bank</h2>
-    <form [formGroup]="addBankForm" (ngSubmit)="onSubmit()">
+    <form class="bank-form"[formGroup]="addBankForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="firstName" class="form-label">Bank Full Name</label>
         <input type="text" id="firstName" class="form-control" formControlName="firstName">

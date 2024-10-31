@@ -6,7 +6,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { TransactionComponent } from './transaction/transaction.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
-
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 export const adminRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // Default route
@@ -18,10 +18,16 @@ export const adminRoutes: Routes = [
     component: AdminComponent,  // Admin layout wrapper
     children: [
       { path: 'dashboard', component: DashboardComponent,},  // Protect this route with authGuard
-      { path: 'user-management', component: UserManagementComponent,},  // Protect this route with authGuard
+      { 
+        path: 'user-management', 
+        component: UserManagementComponent,
+        children: [
+          { path: 'user-details/:phone_no', component: UserDetailsComponent },
+        ]
+      },  // Protect this route with authGuard
       { path: 'transaction', component: TransactionComponent,},  // Protect this route with authGuard
       { path: 'logout', component: LogoutComponent,},  // Protect this route with authGuard
-      { path: 'add-bank', component: AddBankComponent,}  // Protect this route with authGuard
+      { path: 'add-bank', component: AddBankComponent,}
     ]
   }
 ];
