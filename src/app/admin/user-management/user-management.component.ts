@@ -5,17 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { UserDetailsComponent } from '../user-details/user-details.component';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
-  imports: [NgFor, NgIf, RouterOutlet, FormsModule, HttpClientModule]
+  imports: [NgFor, UserDetailsComponent, NgIf, RouterOutlet, FormsModule, HttpClientModule]
 })
 export class UserManagementComponent implements OnInit {
   allUsers: any[] = [];
   searchTerm: string = '';
+  isOverlayVisible: boolean = true;
+
 
   constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
 
@@ -50,9 +53,10 @@ export class UserManagementComponent implements OnInit {
   }
 
   viewUserDetails(user: any): void {
-    console.log('Navigating to user-details with phone_no:', user.user.phone_no);
+    console.log('Navigating to user-details with email:', user.user.email);
+    this.isOverlayVisible = false;
 
-    this.router.navigate(['/admin/user-management/user-details', user.user.phone_no]); // Ensure you're using the correct property
+    this.router.navigate(['/admin/user-management/user-details', user.user.email]); // Ensure you're using the correct property
   }
 
   get filteredUsers() {
@@ -60,7 +64,12 @@ export class UserManagementComponent implements OnInit {
       return this.allUsers;
     }
     return this.allUsers.filter(user =>
-      user.user.phone_no.includes(this.searchTerm)
+      user.user.email.includes(this.searchTerm)
     );
+  }
+
+  closeOverlay(): void {
+    this.isOverlayVisible = true; // Reset overlay visibility
+    this.router.navigate(['admin/user-management']); // Navigate back to the main page
   }
 }

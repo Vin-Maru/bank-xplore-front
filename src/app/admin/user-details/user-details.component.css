@@ -74,4 +74,6 @@
 .decline:hover {
   background-color: darkred; /* Darker red on hover */
 }
-
+header{
+  display: flex;
+}

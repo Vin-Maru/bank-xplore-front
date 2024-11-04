@@ -1,5 +1,7 @@
 <div *ngIf="user; else loading" class="user-details-card">
-  <h2>{{user.first_name}} Details</h2>
+  <div class="header">
+  <h2>{{user.first_name}} Details   </h2>
+  </div>
   <div class="user-info">
     <div class="info-group">
       <label>First Name:</label>
@@ -42,6 +44,8 @@
   <div class="action-buttons">
     <button class="approve" (click)="approveUser()">Approve</button>
     <button class="decline" (click)="declineUser()">Decline</button>
+    <button class="decline" (click)="closeOverlay()">Close</button>
+
   </div>
 </div>
 <ng-template #loading>

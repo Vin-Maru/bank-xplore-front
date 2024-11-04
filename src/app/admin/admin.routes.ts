@@ -22,7 +22,7 @@ export const adminRoutes: Routes = [
         path: 'user-management', 
         component: UserManagementComponent,
         children: [
-          { path: 'user-details/:phone_no', component: UserDetailsComponent },
+          { path: 'user-details/:email', component: UserDetailsComponent },
         ]
       },  // Protect this route with authGuard
       { path: 'transaction', component: TransactionComponent,},  // Protect this route with authGuard

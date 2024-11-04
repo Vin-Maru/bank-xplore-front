@@ -17,7 +17,9 @@ export class AddBankComponent {
     this.addBankForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      countryCode: ['', Validators.required ], // New control for country code
+      phoneNumber: ['', Validators.required] // New control for phone number
     });
   }
 

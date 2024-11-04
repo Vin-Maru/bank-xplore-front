@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, PLATFORM_ID, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-details',
@@ -14,14 +15,17 @@ import { isPlatformBrowser } from '@angular/common';
 export class UserDetailsComponent implements OnInit {
   user: any = null;
   documents: any = null;
+  @Output() close = new EventEmitter<void>();
+
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  loadUserDetails(phone_no: string): void {
+  loadUserDetails(email: string): void {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('authToken');
       const headers = new HttpHeaders().set('Authorization', `keyring_0 ${token}`);
@@ -31,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
           const users = data.payload;
   
           // Find the user by matching phone number
-          const userRecord = users.find((record: any) => record.user.phone_no === phone_no);
+          const userRecord = users.find((record: any) => record.user.email === email);
   
           if (userRecord) {
             // Set the user and documents data separately
@@ -57,9 +61,9 @@ export class UserDetailsComponent implements OnInit {
   
   
   ngOnInit(): void {
-    const phone_no = this.route.snapshot.paramMap.get('phone_no');
-    if (phone_no) {
-      this.loadUserDetails(phone_no);
+    const email = this.route.snapshot.paramMap.get('email');
+    if (email) {
+      this.loadUserDetails(email);
     }
   }
 
@@ -78,10 +82,11 @@ export class UserDetailsComponent implements OnInit {
       verified: true, // Set verified to true to approve the user
     };
   
-    this.http.put(`http://34.28.208.64:8080/kyc/admin/verify/${this.user.email}`, payload, { headers }).subscribe(
+    this.http.post(`http://34.28.208.64:8080/kyc/admin/verify`, payload, { headers }).subscribe(
       () => {
         this.user.account_status = 'Approved'; // Update the user status in the UI
         console.log(`${this.user.first_name} has been approved.`);
+        
       },
       (error) => console.error('Error approving user:', error)
     );
@@ -89,16 +94,30 @@ export class UserDetailsComponent implements OnInit {
   
   declineUser() {
     if (!isPlatformBrowser(this.platformId)) return;
-
+  
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({
       'Authorization': `keyring_0 ${token}`,
       'Content-Type': 'application/json',
     });
-
-    this.http.delete(`http://34.28.208.64:8080/kyc/all-users/${this.user.email}`, { headers }).subscribe(
-      () => console.log(`${this.user.first_name} has been declined.`),
+  
+    // Prepare the request payload
+    const payload = {
+      email: this.user.email,
+      verified: false, // Set verified to true to approve the user
+    };
+  
+    this.http.post(`http://34.28.208.64:8080/kyc/admin/verify`, payload, { headers }).subscribe(
+      () => {
+        this.user.account_status = 'Declined'; // Update the user status in the UI
+        console.log(`${this.user.first_name} Documents Declined.`);
+      },
       (error) => console.error('Error declining user:', error)
     );
+  }
+
+  closeOverlay() {
+    this.close.emit(); // Emits event to close overlay if needed in parent
+    this.router.navigate(['admin/user-management']); // Navigates to user management page
   }
 }

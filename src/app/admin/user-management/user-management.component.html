@@ -31,6 +31,7 @@
           <td>{{ user.user.phone_no }}</td> <!-- Corrected binding to phone_number -->
           <td>
 <!-- Assuming you have a loop over allUsers -->
+ 
           <button (click)="viewUserDetails(user)" class="btn btn-info">View</button>
           </td>
         </tr>
@@ -41,5 +42,6 @@
   <div class="summary">
     <h3>Total Users: {{ allUsers.length }}</h3>
   </div>
-  <router-outlet></router-outlet>
+  <div class="display"><router-outlet></router-outlet>
+  </div>
 </div>
