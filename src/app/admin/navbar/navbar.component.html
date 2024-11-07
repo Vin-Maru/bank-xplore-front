@@ -19,18 +19,40 @@
       <i class="bi bi-person-fill"></i> Manage Users
     </a>
 
-    <a (click)="closeMenu()" routerLink="/admin/add-bank">
-      <i class="bi bi-bank"></i> Add Bank
-    </a>
-
+          <div class="dropdown">
+            <a
+              class="dropdown-toggle"
+              id="bankDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              (click)="closeMenu()"
+            >
+              <i class="bi bi-bank"></i> Bank Management
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="bankDropdown">
+              <li>
+                <a class="dropdown-item" routerLink="/admin/add-bank" (click)="closeMenu()">Add Bank</a>
+              </li>
+              
+              <li>
+                <a class="dropdown-item" routerLink="/admin/view-banks" (click)="closeMenu()">View Banks</a>
+              </li>
+            </ul>
+          </div>
+          
+        
     <a (click)="closeMenu()" routerLink="/admin/transaction">
       <i class="bi bi-receipt-cutoff"></i> Transactions
     </a>
     
-    <a (click)="closeMenu()" routerLink="/notifications">
-      <i class="bi bi-bell-fill"></i> Notifications
-    </a>
-    
+   <div class="notification" >
+    <a (click)="closeDropdown()">
+      <i class="bi bi-bell"></i>Notification 
+    </a> 
+      <span *ngIf="notificationCount > 0" class="badge">{{ notificationCount }}</span>
+    </div>
+ 
     <a (click)="closeMenu()" routerLink="/admin/logout">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>

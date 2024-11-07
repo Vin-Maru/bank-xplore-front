@@ -1,33 +1,78 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { response } from 'express';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar if using Angular Material
+
 
 @Component({
   selector: 'app-add-bank',
   standalone: true,
-  styleUrl:'./add-bank.component.css',
-  imports: [ReactiveFormsModule, CommonModule],
+  styleUrls: ['./add-bank.component.css'],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule,
+    RouterOutlet
+  ],
   templateUrl: './add-bank.component.html',
 })
-export class AddBankComponent {
-  addBankForm: FormGroup;
+export class AddBankComponent implements OnInit {
+  addBankForm !: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor( private snackBar: MatSnackBar, private fb: FormBuilder, private http: HttpClient) {}
+
+  ngOnInit(): void {
     this.addBankForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
+      first_name: ['', [Validators.required]],
+      middle_name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
+      phone_no: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      countryCode: ['', Validators.required ], // New control for country code
-      phoneNumber: ['', Validators.required] // New control for phone number
-    });
+      bankName:['', [Validators.required]],
+
+    }
+  );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.addBankForm.valid) {
-      const bankDetails = this.addBankForm.value;
-      console.log('Bank added successfully:', bankDetails);
-      // Implement logic to handle the bank addition (e.g., API call)
+      // Prepare the payload
+      const userDto = {
+        first_name: this.addBankForm.get('first_name')?.value,
+       middle_name: this.addBankForm.get('middle_name')?.value,
+        last_name: this.addBankForm.get('last_name')?.value,
+        email: this.addBankForm.get('email')?.value,
+        phone_no: this.addBankForm.get('phone_no')?.value,
+        password: this.addBankForm.get('password')?.value
+      };
+
+      const payload = {
+        userDto: userDto,
+        bankName: this.addBankForm.get('bankName')?.value // Adding bankName separately
+      };
+
+      // Send the payload to the backend
+      this.http.post<any>('http://34.28.208.64:8080/kyc/admin/create-bank', payload)
+        .subscribe({
+          next: (response) => {
+            console.log('Bank created successfully:', response);
+          // Show a success message
+          this.snackBar.open('Bank created successfully!', 'Close', {
+            duration: 3000, // Message will disappear after 3 seconds
+          });
+
+          // Clear the form
+          this.addBankForm.reset();
+          },
+          error: (error) => {
+            console.error('Error creating bank:', error);
+            this.snackBar.open('Failed to create bank. Please try again.', 'Close', {
+              duration: 3000,
+            });
+          }
+        });
     }
   }
 }

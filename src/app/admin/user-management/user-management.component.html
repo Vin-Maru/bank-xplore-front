@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of filteredUsers">
+        <tr *ngFor="let user of allUsers">
           <td>{{ user.user.first_name }}</td>
           <td>{{ user.user.last_name }}</td>
           <td>{{ user.user.email }}</td>
@@ -41,7 +41,13 @@
 
   <div class="summary">
     <h3>Total Users: {{ allUsers.length }}</h3>
+ <!-- main.component.html (or wherever you want the overlay) -->
+<div class="display">
+  <div class="overlay-container">
+    <div class="overlay-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="display"><router-outlet></router-outlet>
-  </div>
+</div>
+
 </div>

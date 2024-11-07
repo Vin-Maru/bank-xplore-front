@@ -21,7 +21,7 @@
 
 .nav-links {
   display: flex;
-  gap: 80px;
+  gap: 50px;
  
 }
 .nav-links :hover {
@@ -41,7 +41,7 @@
 }
 
 .nav-links a i {
-  margin-right: 8px; /* Space between icon and text */
+  margin-right: 2px; /* Space between icon and text */
   font-size: 18px;
 }
 
@@ -80,54 +80,17 @@
    
   }
 }
-
-.nav-item.dropdown {
-  position: relative; /* Make sure the dropdown menu positions correctly */
-}
-
-/* Remove hover effect for Management link */
-.nav-item.dropdown > .nav-link {
-  pointer-events: none; /* Disable hover effects for the Management link */
-}
-
 .dropdown-menu {
-  display: none; /* Initially hide the dropdown */
-  position: absolute; /* Position it relative to the parent */
-  background-color: #4747be; /* Background color for the dropdown */
-  border: 3px solid #ddd; /* Border for visibility */
-  border-radius: 4px; /* Slightly rounded corners */
-  z-index: 1000; /* Ensure it appears above other elements */
-  opacity: 0; /* Start hidden */
-  transition: opacity 1s ease, transform 0.7s ease; /* Transition for smooth effect */
-  transform: translateY(-10px); /* Start slightly above */
+  display: none;
+  position: absolute;
+  margin-top: auto;
 }
-
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block; /* Show dropdown on hover */
-  opacity: 1; /* Fade in */
-  transform: translateY(0); /* Move into place */
+.dropdown:hover .dropdown-menu {
+  display: block;
+  background-color: #081a20;
 }
-
-.dropdown-item {
-  padding: 8px 12px; /* Smaller padding for compact size */
-  text-decoration: none; /* Remove underline */
-  color: #fff; /* Set text color to white for better contrast */
-  font-size: 14px; /* Smaller font size */
-}
-
-/* Keep the active dropdown item grey */
-.dropdown-item.active {
-  background-color: gray; /* Keep active item highlighted */
-}
-
-/* Highlight on hover */
-.dropdown-item:hover {
-  padding: 5px;
-  background-color: darkgray; /* Change to dark gray on hover */
-  transition: background-color 0.3s ease; /* Smooth transition on hover */
-}
-
-/* Remove bullet points */
-.nav-item {
-  list-style: none; /* Remove dot (list-style) */
+/* Notification icon with badge */
+.notification {
+  font-size: 18px;
+  color: aliceblue;
 }

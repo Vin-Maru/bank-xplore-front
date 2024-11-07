@@ -4,6 +4,8 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar if using Angular Material
+
 
 @Component({
   selector: 'app-user-details',
@@ -19,6 +21,7 @@ export class UserDetailsComponent implements OnInit {
 
 
   constructor(
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
@@ -41,8 +44,8 @@ export class UserDetailsComponent implements OnInit {
             // Set the user and documents data separately
             this.user = userRecord.user;
             this.documents = [
-              { type: 'ID Document', url: userRecord.idUploadUrl },
-              { type: 'KRA Document', url: userRecord.kraUploadUrl }
+              { type: 'ID Document', url: userRecord.idImage },
+              { type: 'KRA Document', url: userRecord.kraImage }
             ].filter(doc => doc.url); // Filter out any entries without a URL
   
             console.log('User details loaded:', this.user);
@@ -85,9 +88,13 @@ export class UserDetailsComponent implements OnInit {
     this.http.post(`http://34.28.208.64:8080/kyc/admin/verify`, payload, { headers }).subscribe(
       () => {
         this.user.account_status = 'Approved'; // Update the user status in the UI
+
         console.log(`${this.user.first_name} has been approved.`);
+
+        this.snackBar.open('Approved successfully!', 'Close'),{
+          duration: 3000, // Message will disappear after 3 seconds
         
-      },
+      }},
       (error) => console.error('Error approving user:', error)
     );
   }

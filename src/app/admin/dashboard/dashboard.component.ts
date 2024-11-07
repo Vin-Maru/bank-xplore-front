@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   standalone:true,
@@ -18,7 +19,8 @@ export class DashboardComponent implements OnInit {
   numberOfUsers: number = 0;
   numberOfNotifications: number = 0;
   totalTransactions: number = 0;
-  usersWaitingApproval: number = 0;  // New property for users waiting approval
+  usersWaitingApproval: number = 0; 
+  notificationCount: number = 0;
 
   constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
 
@@ -26,7 +28,7 @@ export class DashboardComponent implements OnInit {
     // Replace these with actual data from a service or API
     this.fetchUsers();
    
-    this.numberOfNotifications = 10; // Example data
+    this.notificationCount ; // Example data
     this.totalTransactions = 500; // Example data
     this.usersWaitingApproval = 5; // Example data for users waiting approval
    

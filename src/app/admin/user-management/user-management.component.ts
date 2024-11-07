@@ -18,6 +18,8 @@ export class UserManagementComponent implements OnInit {
   allUsers: any[] = [];
   searchTerm: string = '';
   isOverlayVisible: boolean = true;
+  showOverlay: boolean = true;
+
 
 
   constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
@@ -29,17 +31,19 @@ export class UserManagementComponent implements OnInit {
   fetchUsers(): void {
     // Check if we are in the browser
     if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('authToken');  // This line is safe now
       const headers = new HttpHeaders({
         'Authorization': `keyring_0 ${token}`,
         'Content-Type': 'application/json',
       });
-
+  
       this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
         (response) => {
           if (response && Array.isArray(response.payload)) {
             this.allUsers = response.payload;
-          } else {
+
+          } 
+          else {
             console.error('Unexpected response structure:', response);
           }
         },
@@ -51,6 +55,7 @@ export class UserManagementComponent implements OnInit {
       console.warn('Cannot access localStorage in this environment');
     }
   }
+  
 
   viewUserDetails(user: any): void {
     console.log('Navigating to user-details with email:', user.user.email);
@@ -72,4 +77,5 @@ export class UserManagementComponent implements OnInit {
     this.isOverlayVisible = true; // Reset overlay visibility
     this.router.navigate(['admin/user-management']); // Navigate back to the main page
   }
+
 }

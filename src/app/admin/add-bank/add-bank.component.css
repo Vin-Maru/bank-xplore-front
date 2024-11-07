@@ -1,5 +1,5 @@
 .container{
-    width: auto;
+  
     align-items: center;
     width: 400px;
     border-color: aqua;
@@ -13,4 +13,9 @@
 }
 .form-select{
     float: left;
+}
+.mb-3{
+    padding: auto;
+    width: 300px;
+    margin: auto;
 }

@@ -1,15 +1,34 @@
 <div class="container">
   <h2>Add Bank</h2>
   <form class="bank-form" [formGroup]="addBankForm" (ngSubmit)="onSubmit()">
+    <!-- First Name -->
     <div class="mb-3">
-      <label for="firstName" class="form-label">Bank Full Name</label>
-      <input type="text" id="firstName" class="form-control" formControlName="firstName">
-      <div *ngIf="addBankForm.get('firstName')?.invalid && addBankForm.get('firstName')?.touched" class="text-danger">
-        <small *ngIf="addBankForm.get('firstName')?.errors?.['required']">Bank name is required.</small>
-        <small *ngIf="addBankForm.get('firstName')?.errors?.['minlength']">Bank name must be at least 3 characters long.</small>
+      <label for="first_name" class="form-label">First Name</label>
+      <input type="text" id="first_name" class="form-control" formControlName="first_name">
+      <div *ngIf="addBankForm.get('first_name')?.invalid && addBankForm.get('first_name')?.touched" class="text-danger">
+        <small *ngIf="addBankForm.get('first_name')?.errors?.['required']">First name is required.</small>
       </div>
     </div>
 
+    <!-- Middle Name -->
+    <div class="mb-3">
+      <label for="middle_name" class="form-label">Middle Name</label>
+      <input type="text" id="middle_name" class="form-control" formControlName="middle_name">
+      <div *ngIf="addBankForm.get('middle_name')?.invalid && addBankForm.get('middle_name')?.touched" class="text-danger">
+        <small *ngIf="addBankForm.get('middle_name')?.errors?.['required']">Middle name is required.</small>
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="mb-3">
+      <label for="last-name" class="form-label">Last Name</label>
+      <input type="text" id="last_name" class="form-control" formControlName="last_name">
+      <div *ngIf="addBankForm.get('last_name')?.invalid && addBankForm.get('last_name')?.touched" class="text-danger">
+        <small *ngIf="addBankForm.get('last_name')?.errors?.['required']">Last name is required.</small>
+      </div>
+    </div>
+
+    <!-- Email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <input type="email" id="email" class="form-control" formControlName="email">
@@ -19,6 +38,31 @@
       </div>
     </div>
 
+    <!-- Phone Number with Country Code -->
+    <div class="mb-3">
+      <label for="phone_no" class="form-label">Phone Number</label>
+      <div class="input-group">
+        <select class="form-select" aria-label="Country code">
+          <option value="+254">+254</option>
+          <option value="+1">+1</option>
+          <option value="+44">+44</option>
+          <!-- Add other country codes as needed -->
+        </select>
+        <input type="text" id="phone_no" class="form-control" formControlName="phone_no" placeholder="Enter phone number">
+      </div>
+      <div *ngIf="addBankForm.get('phone_no')?.invalid && addBankForm.get('phone_no')?.touched" class="text-danger">
+        <small *ngIf="addBankForm.get('phone_no')?.errors?.['required']">Phone number is required.</small>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="bankName" class="form-label">Bank Name</label>
+      <input type="text" id="bankName" class="form-control" formControlName="bankName">
+      <div *ngIf="addBankForm.get('bankName')?.invalid && addBankForm.get('bankName')?.touched" class="text-danger">
+        <small *ngIf="addBankForm.get('bankName')?.errors?.['required']">Bank name is required.</small>
+      </div>
+    </div>
+
+    <!-- Password -->
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input type="password" id="password" class="form-control" formControlName="password">
@@ -27,89 +71,8 @@
         <small *ngIf="addBankForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
       </div>
     </div>
+  
 
-    <!-- Phone Number Input with Country Code Dropdown -->
-    <div class="mb-3">
-      <label for="phoneNumber" class="form-label">Phone Number</label>
-      <div class="input-group">
-        <select class="form-select" formControlName="countryCode">
-          <option value="+1">United States (+1)</option>
-          <option value="+44">United Kingdom (+44)</option>
-          <option value="+91">India (+91)</option>
-          <option value="+61">Australia (+61)</option>
-          <option value="+55">Brazil (+55)</option>
-          <option value="+86">China (+86)</option>
-          <option value="+33">France (+33)</option>
-          <option value="+49">Germany (+49)</option>
-          <option value="+39">Italy (+39)</option>
-          <option value="+81">Japan (+81)</option>
-          <option value="+7">Russia (+7)</option>
-          <option value="+27">South Africa (+27)</option>
-          <option value="+82">South Korea (+82)</option>
-          <option value="+34">Spain (+34)</option>
-          <option value="+46">Sweden (+46)</option>
-          <option value="+41">Switzerland (+41)</option>
-          <option value="+971">United Arab Emirates (+971)</option>
-          <option value="+263">Zimbabwe (+263)</option>
-          <option value="+20">Egypt (+20)</option>
-          <option value="+254">Kenya (+254)</option>
-          <option value="+52">Mexico (+52)</option>
-          <option value="+47">Norway (+47)</option>
-          <option value="+63">Philippines (+63)</option>
-          <option value="+48">Poland (+48)</option>
-          <option value="+351">Portugal (+351)</option>
-          <option value="+65">Singapore (+65)</option>
-          <option value="+66">Thailand (+66)</option>
-          <option value="+90">Turkey (+90)</option>
-          <option value="+256">Uganda (+256)</option>
-          <option value="+380">Ukraine (+380)</option>
-          <option value="+598">Uruguay (+598)</option>
-          <option value="+58">Venezuela (+58)</option>
-          <option value="+84">Vietnam (+84)</option>
-          <option value="+94">Sri Lanka (+94)</option>
-          <option value="+60">Malaysia (+60)</option>
-          <option value="+62">Indonesia (+62)</option>
-          <option value="+64">New Zealand (+64)</option>
-          <option value="+372">Estonia (+372)</option>
-          <option value="+358">Finland (+358)</option>
-          <option value="+995">Georgia (+995)</option>
-          <option value="+30">Greece (+30)</option>
-          <option value="+36">Hungary (+36)</option>
-          <option value="+354">Iceland (+354)</option>
-          <option value="+353">Ireland (+353)</option>
-          <option value="+961">Lebanon (+961)</option>
-          <option value="+223">Mali (+223)</option>
-          <option value="+234">Nigeria (+234)</option>
-          <option value="+92">Pakistan (+92)</option>
-          <option value="+233">Ghana (+233)</option>
-          <option value="+357">Cyprus (+357)</option>
-          <option value="+421">Slovakia (+421)</option>
-          <option value="+45">Denmark (+45)</option>
-          <option value="+994">Azerbaijan (+994)</option>
-          <option value="+40">Romania (+40)</option>
-          <option value="+374">Armenia (+374)</option>
-          <option value="+375">Belarus (+375)</option>
-          <option value="+354">Iceland (+354)</option>
-          <option value="+972">Israel (+972)</option>
-          <option value="+62">Indonesia (+62)</option>
-          <option value="+53">Cuba (+53)</option>
-          <option value="+54">Argentina (+54)</option>
-          <option value="+351">Portugal (+351)</option>
-          <option value="+216">Tunisia (+216)</option>
-          <option value="+374">Armenia (+374)</option>
-          <option value="+998">Uzbekistan (+998)</option>
-          <option value="+249">Sudan (+249)</option>
-          <option value="+509">Haiti (+509)</option>
-          
-          <!-- Add more country codes as needed -->
-        </select>
-        <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" placeholder="Enter phone number">
-      </div>
-      <div *ngIf="addBankForm.get('phoneNumber')?.invalid && addBankForm.get('phoneNumber')?.touched" class="text-danger">
-        <small *ngIf="addBankForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</small>
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="addBankForm.invalid">Add Bank</button>
+    <button type="submit" class="btn btn-primary">Add Bank</button>
   </form>
 </div>

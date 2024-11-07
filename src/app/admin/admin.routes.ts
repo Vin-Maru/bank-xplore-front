@@ -7,17 +7,19 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { AuthGuard } from '../auth.guard';
+
 
 export const adminRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // Default route
 
-  { path: 'login', component: LoginComponent },  // Login route
+  { path: 'login', component: LoginComponent},  // Login route
   
   {
     path: '',  // Empty path to indicate admin base
     component: AdminComponent,  // Admin layout wrapper
     children: [
-      { path: 'dashboard', component: DashboardComponent,},  // Protect this route with authGuard
+      { path: 'dashboard', component: DashboardComponent},  // Protect this route with authGuard
       { 
         path: 'user-management', 
         component: UserManagementComponent,

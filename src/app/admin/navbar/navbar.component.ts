@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,9 +17,18 @@ export class NavbarComponent {
   public navbarStyle: any = {};
   public isMenuOpen: boolean = false; // State to track if the main menu is open
   public isDropdownOpen: boolean = false; // State to track if the dropdown menu is open
+  notificationCount: number = 0;
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
+  constructor(private notificationService: NotificationService,
+    private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+
+
+    ngOnInit() {
+      this.notificationService.notificationCount$.subscribe(count => {
+        this.notificationCount = count;
+      });
+    }
   // Opens the main menu
   openMenu() {
     this.isMenuOpen = true;
