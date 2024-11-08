@@ -4,6 +4,7 @@
   <div class="table-container">
     <h3 style="display: flex; justify-content: space-between; align-items: center;">
       All Users
+      <!-- Input for searching by phone number -->
       <input 
         type="text" 
         [(ngModel)]="searchTerm" 
@@ -17,22 +18,22 @@
       <thead>
         <tr>
           <th>First Name</th>
-          <th>Last Name</th> <!-- Adjusted to show last name instead of middle name -->
+          <th>Last Name</th>
           <th>Email</th>
           <th>Phone Number</th>
+          <th>Account</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of allUsers">
+        <tr *ngFor="let user of filteredUsers">
           <td>{{ user.user.first_name }}</td>
           <td>{{ user.user.last_name }}</td>
           <td>{{ user.user.email }}</td>
-          <td>{{ user.user.phone_no }}</td> <!-- Corrected binding to phone_number -->
+          <td>{{ user.user.phone_no }}</td>
+          <td>{{ user.user.account_status }}</td>
           <td>
-<!-- Assuming you have a loop over allUsers -->
- 
-          <button (click)="viewUserDetails(user)" class="btn btn-info">View</button>
+            <button (click)="viewUserDetails(user)" class="btn btn-info">View</button>
           </td>
         </tr>
       </tbody>
@@ -40,14 +41,6 @@
   </div>
 
   <div class="summary">
-    <h3>Total Users: {{ allUsers.length }}</h3>
- <!-- main.component.html (or wherever you want the overlay) -->
-<div class="display">
-  <div class="overlay-container">
-    <div class="overlay-content">
-      <router-outlet></router-outlet>
-    </div>
+    <h3>Total Users: {{ filteredUsers.length }}</h3>
   </div>
-</div>
-
 </div>

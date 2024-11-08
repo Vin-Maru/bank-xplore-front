@@ -31,7 +31,7 @@ export class UserDetailsComponent implements OnInit {
   loadUserDetails(email: string): void {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders().set('Authorization', `keyring_0 ${token}`);
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   
       this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
         (data) => {

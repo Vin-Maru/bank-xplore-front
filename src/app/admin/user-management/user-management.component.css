@@ -68,7 +68,7 @@
   }
 /* styles.css */
 .overlay-container {
-  position: fixed;
+  position: relative;
   top: 10%; /* Change this value to adjust position */
   left: 0%;
   right: 0%;/* Adjust the position so it doesn't cover the whole window */

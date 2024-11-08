@@ -29,21 +29,18 @@ export class UserManagementComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    // Check if we are in the browser
     if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');  // This line is safe now
+      const token = localStorage.getItem('authToken');
       const headers = new HttpHeaders({
-        'Authorization': `keyring_0 ${token}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       });
-  
+
       this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
         (response) => {
           if (response && Array.isArray(response.payload)) {
             this.allUsers = response.payload;
-
-          } 
-          else {
+          } else {
             console.error('Unexpected response structure:', response);
           }
         },
@@ -51,9 +48,17 @@ export class UserManagementComponent implements OnInit {
           console.error('Error fetching users:', error);
         }
       );
-    } else {
-      console.warn('Cannot access localStorage in this environment');
     }
+  }
+
+  // Getter to filter users by phone number dynamically
+  get filteredUsers() {
+    if (!this.searchTerm) {
+      return this.allUsers;
+    }
+    return this.allUsers.filter(user =>
+      user.user.phone_no?.includes(this.searchTerm)
+    );
   }
   
 
@@ -63,19 +68,8 @@ export class UserManagementComponent implements OnInit {
 
     this.router.navigate(['/admin/user-management/user-details', user.user.email]); // Ensure you're using the correct property
   }
-
-  get filteredUsers() {
-    if (!this.searchTerm) {
-      return this.allUsers;
-    }
-    return this.allUsers.filter(user =>
-      user.user.email.includes(this.searchTerm)
-    );
-  }
-
   closeOverlay(): void {
     this.isOverlayVisible = true; // Reset overlay visibility
     this.router.navigate(['admin/user-management']); // Navigate back to the main page
-  }
-
+  } 
 }

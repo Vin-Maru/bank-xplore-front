@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('authToken');
       const headers = new HttpHeaders({
-        'Authorization': `keyring_0 ${token}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       });
   
