@@ -1,26 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+// src/app/components/add-bank/add-bank.component.ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { response } from 'express';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar if using Angular Material
-
-
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../services/user.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-add-bank',
-  standalone: true,
+  standalone:true,
+  imports:[ReactiveFormsModule, CommonModule],
   styleUrls: ['./add-bank.component.css'],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule,
-    RouterOutlet
-  ],
   templateUrl: './add-bank.component.html',
 })
 export class AddBankComponent implements OnInit {
-  addBankForm !: FormGroup;
+  addBankForm!: FormGroup;
 
-  constructor( private snackBar: MatSnackBar, private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder,
+    private userService:UserService // InjectUserService
+  ) {}
 
   ngOnInit(): void {
     this.addBankForm = this.fb.group({
@@ -30,10 +28,8 @@ export class AddBankComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone_no: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      bankName:['', [Validators.required]],
-
-    }
-  );
+      bankName: ['', [Validators.required]],
+    });
   }
 
   onSubmit(): void {
@@ -41,23 +37,22 @@ export class AddBankComponent implements OnInit {
       // Prepare the payload
       const userDto = {
         first_name: this.addBankForm.get('first_name')?.value,
-       middle_name: this.addBankForm.get('middle_name')?.value,
+        middle_name: this.addBankForm.get('middle_name')?.value,
         last_name: this.addBankForm.get('last_name')?.value,
         email: this.addBankForm.get('email')?.value,
         phone_no: this.addBankForm.get('phone_no')?.value,
-        password: this.addBankForm.get('password')?.value
+        password: this.addBankForm.get('password')?.value,
       };
 
       const payload = {
         userDto: userDto,
-        bankName: this.addBankForm.get('bankName')?.value // Adding bankName separately
+        bankName: this.addBankForm.get('bankName')?.value, // Adding bankName separately
       };
 
-      // Send the payload to the backend
-      this.http.post<any>('http://34.28.208.64:8080/kyc/admin/create-bank', payload)
-        .subscribe({
-          next: (response) => {
-            console.log('Bank created successfully:', response);
+      // Call theUserService to create a bank
+      this.userService.createBank(payload).subscribe(
+        (response) => {
+          console.log('Bank created successfully:', response);
           // Show a success message
           this.snackBar.open('Bank created successfully!', 'Close', {
             duration: 3000, // Message will disappear after 3 seconds
@@ -65,14 +60,14 @@ export class AddBankComponent implements OnInit {
 
           // Clear the form
           this.addBankForm.reset();
-          },
-          error: (error) => {
-            console.error('Error creating bank:', error);
-            this.snackBar.open('Failed to create bank. Please try again.', 'Close', {
-              duration: 3000,
-            });
-          }
-        });
+        },
+        (error) => {
+          console.error('Error creating bank:', error);
+          this.snackBar.open('Failed to create bank. Please try again.', 'Close', {
+            duration: 3000,
+          });
+        }
+      );
     }
   }
 }

@@ -25,7 +25,7 @@
     </div>
     <div class="info-group">
       <label>Verification:</label>
-      <span style="font-weight: bold; color: red;">{{ user.account_action }}</span>
+      <span style="font-weight: bold; color: red;">    {{ user.account_action || 'Pending' }}</span>
     </div>
   </div>
 
@@ -44,6 +44,8 @@
   <div class="action-buttons">
     <button class="approve" (click)="approveUser()">Approve</button>
     <button class="decline" (click)="declineUser()">Decline</button>
+    <button class="decline" (click)="onDelete(user.email)">Delete</button>
+
     <button class="decline" (click)="closeOverlay()">Close</button>
 
   </div>

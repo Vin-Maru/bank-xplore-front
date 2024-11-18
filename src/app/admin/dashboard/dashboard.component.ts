@@ -1,16 +1,12 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NgFor, NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service'; // Import the existing UserService
 import { HttpClientModule } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
-import { NotificationService } from '../notification/notification.service';
 
 @Component({
-  standalone:true,
-  imports: [NgFor, NgIf,RouterOutlet,FormsModule,HttpClientModule ],
+  standalone: true,
   selector: 'app-dashboard',
+  imports:[HttpClientModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
@@ -19,45 +15,53 @@ export class DashboardComponent implements OnInit {
   numberOfUsers: number = 0;
   numberOfNotifications: number = 0;
   totalTransactions: number = 0;
-  usersWaitingApproval: number = 0; 
+  usersWaitingApproval: number = 0;
   notificationCount: number = 0;
 
-  constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(
+    private userService: UserService, // Inject the existing UserService
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-    // Replace these with actual data from a service or API
+  ngOnInit(): void {
+    // Fetch users using the UserService
     this.fetchUsers();
+    this.pendingApproval();
    
-    this.notificationCount ; // Example data
-    this.totalTransactions = 500; // Example data
-    this.usersWaitingApproval = 5; // Example data for users waiting approval
-   
+    // Example static data for other dashboard elements
+    this.notificationCount = 3;
+    this.totalTransactions = 50;
+
   }
 
+  // Use the UserService to fetch the users
   fetchUsers(): void {
-    // Check if we are in the browser
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      });
-  
-      this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
-        (response) => {
-          if (response && Array.isArray(response.payload)) {
-            // Capture the number of users instead of storing the users
-            this.numberOfUsers = response.payload.length;
-          } else {
-            console.error('Unexpected response structure:', response);
-          }
-        },
-        (error) => {
-          console.error('Error fetching users:', error);
+    this.userService.fetchUsers().subscribe(
+      (response) => {
+        if (response && Array.isArray(response.payload)) {
+          this.numberOfUsers = response.payload.length; // Set the number of users
+        } else {
+          console.error('Unexpected response structure:', response);
         }
-      );
-    } else {
-      console.warn('Cannot access localStorage in this environment');
-    }
-  }  
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+  }
+
+
+
+  // Method to get the count of users with 'Deactivated' status
+  pendingApproval(): void {
+    this.userService.fetchPendingApprovalUsers().subscribe(
+      count => {
+        this.pendingApproval = count;  // Set the count of pending users
+        console.log('Pending Approval Users:',);
+      },
+      error => {
+        console.error('Error fetching pending approval users:', error);
+      }
+    );
+  }
 }

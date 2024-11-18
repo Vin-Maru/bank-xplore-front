@@ -1,16 +1,15 @@
+// src/app/components/user-details/user-details.component.ts
 import { Component, OnInit, Inject, PLATFORM_ID, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar if using Angular Material
-
-
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { response } from 'express';
+import { error } from 'console';
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports:[CommonModule],
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css'],
 })
@@ -19,35 +18,28 @@ export class UserDetailsComponent implements OnInit {
   documents: any = null;
   @Output() close = new EventEmitter<void>();
 
-
   constructor(
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private http: HttpClient,
+    private userService: UserService, // Inject UserService
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   loadUserDetails(email: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-      this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
+      this.userService.fetchUsers().subscribe(
         (data) => {
           const users = data.payload;
-  
-          // Find the user by matching phone number
           const userRecord = users.find((record: any) => record.user.email === email);
-  
+
           if (userRecord) {
-            // Set the user and documents data separately
             this.user = userRecord.user;
             this.documents = [
               { type: 'ID Document', url: userRecord.idImage },
               { type: 'KRA Document', url: userRecord.kraImage }
-            ].filter(doc => doc.url); // Filter out any entries without a URL
-  
+            ].filter(doc => doc.url); // Filter out any documents without a URL
+
             console.log('User details loaded:', this.user);
             console.log('Document details loaded:', this.documents);
           } else {
@@ -60,9 +52,7 @@ export class UserDetailsComponent implements OnInit {
       console.error('localStorage is not available on the server.');
     }
   }
-  
-  
-  
+
   ngOnInit(): void {
     const email = this.route.snapshot.paramMap.get('email');
     if (email) {
@@ -70,60 +60,60 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  approveUser() {
+  approveUser(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-  
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Authorization': `keyring_0 ${token}`,
-      'Content-Type': 'application/json',
-    });
-  
-    // Prepare the request payload
-    const payload = {
-      email: this.user.email,
-      verified: true, // Set verified to true to approve the user
-    };
-  
-    this.http.post(`http://34.28.208.64:8080/kyc/admin/verify`, payload, { headers }).subscribe(
+
+    this.userService.approveUser(this.user.email).subscribe(
       () => {
         this.user.account_status = 'Approved'; // Update the user status in the UI
+        this.router.navigate(['admin/user-management']); 
 
-        console.log(`${this.user.first_name} has been approved.`);
-
-        this.snackBar.open('Approved successfully!', 'Close'),{
-          duration: 3000, // Message will disappear after 3 seconds
-        
-      }},
-      (error) => console.error('Error approving user:', error)
+        this.snackBar.open('User approved successfully!', 'Close', {
+          duration: 3000,
+        });
+      },
+      (error) => {
+        console.error('Error approving user:', error);
+        this.snackBar.open('Error approving user', 'Close', { duration: 3000 });
+      }
     );
   }
-  
-  declineUser() {
+
+  declineUser(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-  
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Authorization': `keyring_0 ${token}`,
-      'Content-Type': 'application/json',
-    });
-  
-    // Prepare the request payload
-    const payload = {
-      email: this.user.email,
-      verified: false, // Set verified to true to approve the user
-    };
-  
-    this.http.post(`http://34.28.208.64:8080/kyc/admin/verify`, payload, { headers }).subscribe(
+
+    this.userService.declineUser(this.user.email).subscribe(
       () => {
         this.user.account_status = 'Declined'; // Update the user status in the UI
-        console.log(`${this.user.first_name} Documents Declined.`);
+        this.router.navigate(['admin/user-management']); 
+
+        this.snackBar.open('User declined successfully!', 'Close', {
+          duration: 3000,
+
+        });
       },
-      (error) => console.error('Error declining user:', error)
+      (error) => {
+        console.error('Error declining user:', error);
+        this.snackBar.open('Error declining user', 'Close', { duration: 3000 });
+      }
     );
   }
 
-  closeOverlay() {
+  onDelete(email: string): void {
+    this.userService.deleteUser(email).subscribe({
+      next: (response) => {
+        console.log('User deleted successfully', response);
+        // Optional: Refresh the user list or display a success message
+        this.router.navigate(['admin/user-management']); 
+      },
+      error: (error) => {
+        console.error('Error in deleting user:', error);
+      },
+    });
+  }
+  
+
+  closeOverlay(): void {
     this.close.emit(); // Emits event to close overlay if needed in parent
     this.router.navigate(['admin/user-management']); // Navigates to user management page
   }

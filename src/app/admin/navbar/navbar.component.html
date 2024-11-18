@@ -45,13 +45,7 @@
     <a (click)="closeMenu()" routerLink="/admin/transaction">
       <i class="bi bi-receipt-cutoff"></i> Transactions
     </a>
-    
-   <div class="notification" >
-    <a (click)="closeDropdown()">
-      <i class="bi bi-bell"></i>Notification 
-    </a> 
-      <span *ngIf="notificationCount > 0" class="badge">{{ notificationCount }}</span>
-    </div>
+  
  
     <a (click)="closeMenu()" routerLink="/admin/logout">
       <i class="fas fa-sign-out-alt"></i> Logout

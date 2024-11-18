@@ -1,18 +1,18 @@
+// src/app/user-management/user-management.component.ts
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { UserDetailsComponent } from '../user-details/user-details.component';
+import { UserService } from '../services/user.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
-  imports: [NgFor, UserDetailsComponent, NgIf, RouterOutlet, FormsModule, HttpClientModule]
+  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
 })
 export class UserManagementComponent implements OnInit {
   allUsers: any[] = [];
@@ -20,9 +20,11 @@ export class UserManagementComponent implements OnInit {
   isOverlayVisible: boolean = true;
   showOverlay: boolean = true;
 
-
-
-  constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -30,13 +32,7 @@ export class UserManagementComponent implements OnInit {
 
   fetchUsers(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      });
-
-      this.http.get<any>('http://34.28.208.64:8080/kyc/admin/all-users', { headers }).subscribe(
+      this.userService.fetchUsers().subscribe(
         (response) => {
           if (response && Array.isArray(response.payload)) {
             this.allUsers = response.payload;
@@ -61,15 +57,15 @@ export class UserManagementComponent implements OnInit {
     );
   }
   
-
   viewUserDetails(user: any): void {
     console.log('Navigating to user-details with email:', user.user.email);
     this.isOverlayVisible = false;
 
-    this.router.navigate(['/admin/user-management/user-details', user.user.email]); // Ensure you're using the correct property
+    this.router.navigate(['admin/user-management/user-details', user.user.email]);
   }
+
   closeOverlay(): void {
-    this.isOverlayVisible = true; // Reset overlay visibility
-    this.router.navigate(['admin/user-management']); // Navigate back to the main page
-  } 
+    this.isOverlayVisible = true;
+    this.router.navigate(['admin/user-management']);
+  }
 }

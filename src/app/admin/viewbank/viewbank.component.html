@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Bank List</h2>
+    
+    <!-- Table for displaying banks -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Bank ID</th>
+          <th>Bank Name</th>
+          <th>Status</th>
+          <th>Created At</th>
+          <th>Bank Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through each bank in the banks array -->
+        <tr *ngFor="let bank of banks">
+          <td>{{ bank.bankId }}</td>
+          <td>{{ bank.bankName }}</td>
+          <td>{{ bank.status }}</td>
+          <td>{{ bank.createdAt | date: 'short' }}</td>
+          <td>{{ bank.bankCode }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

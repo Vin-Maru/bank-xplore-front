@@ -8,6 +8,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AuthGuard } from '../auth.guard';
+import { ViewBanksComponent } from './viewbank/viewbank.component';
 
 
 export const adminRoutes: Routes = [
@@ -29,7 +30,8 @@ export const adminRoutes: Routes = [
       },  // Protect this route with authGuard
       { path: 'transaction', component: TransactionComponent,},  // Protect this route with authGuard
       { path: 'logout', component: LogoutComponent,},  // Protect this route with authGuard
-      { path: 'add-bank', component: AddBankComponent,}
+      { path: 'add-bank', component: AddBankComponent,},
+      {path: 'view-banks', component: ViewBanksComponent}
     ]
   }
 ];

@@ -33,12 +33,12 @@ export class LoginComponent {
             this.isLoading = false; 
             
          
-            const token = response.payload.keyring_0;  // payload respond found
+            const token = response.payload.token;  // payload respond found
             if (token) {
               localStorage.setItem('authToken', token);  // Save token in local storage
               this.email = ''; // Clear email input
               this.password = ''; // Clear password input
-              this.router.navigate(['/admin/dashboard']);  // Redirect to dashboard
+              this.router.navigate(['admin/dashboard']);  // Redirect to dashboard
             }
           },
           error: (err) => {

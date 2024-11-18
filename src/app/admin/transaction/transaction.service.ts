@@ -1,21 +1,33 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of} from 'rxjs';
-@Injectable({
-  providedIn: 'root'
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+
+@Component({
+  selector: 'app-transactions',
+  standalone: true,
+  imports: [],
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.css'],
 })
-export class TransactionService {
-    constructor() {}
-  
-    // Dummy transaction data
-    private dummyTransactions = [
-      { id: 1, user: 'User 1', amount: 100, date: '2024-10-15', status: 'Completed' },
-      { id: 2, user: 'User 2', amount: 200, date: '2024-10-16', status: 'Pending' },
-      { id: 3, user: 'User 3', amount: 150, date: '2024-10-14', status: 'Failed' },
-    ];
-  
-    getTransactions(): Observable<any[]> {
-      // Return dummy data as an observable
-      return of(this.dummyTransactions);
-    }
+export class TransactionsComponent implements OnInit {
+  transactions: any[] = [];
+  errorMessage: string = '';
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.fetchTransactions();
   }
+
+  fetchTransactions(): void {
+    this.userService.bankTransaction().subscribe({
+      next: (data) => {
+        console.log('Transactions:', data);
+        this.transactions = data;
+      },
+      error: (error) => {
+        console.error('Error fetching transactions:', error);
+        this.errorMessage = 'Could not fetch transactions. Please try again.';
+      },
+    });
+  }
+}

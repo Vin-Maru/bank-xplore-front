@@ -1,47 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from './transaction.service';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
-import { CommonModule } from '@angular/common'; // Import CommonModule for ngIf
-import { RouterOutlet } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
+import { UserService } from '../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-transaction',
+  selector: 'app-transactions',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css'],
-  imports: [FormsModule, CommonModule, RouterOutlet, HttpClientModule], // Add HttpClientModule here
 })
-
 export class TransactionComponent implements OnInit {
-  transactions: any[] = []; // Replace with your transaction model
-  searchTerm: string = '';
+  transactions: any[] = [];
+  errorMessage: string = '';
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {
-    this.loadTransactions();
+  ngOnInit(): void {
+    this.fetchTransactions();
   }
 
-  loadTransactions() {
-    this.transactionService.getTransactions().subscribe((data) => {
-      this.transactions = data;
+  fetchTransactions(): void {
+    this.userService.bankTransaction().subscribe({
+      next: (data) => {
+        console.log('Transactions:', data);
+        this.transactions = data;
+      },
+      error: (error) => {
+        console.error('Error fetching transactions:', error);
+        this.errorMessage = 'Could not fetch transactions. Please try again.';
+      },
     });
-  }
-
-  filteredTransactions() {
-    return this.transactions.filter(transaction => 
-      transaction.user.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
-
-  viewDetails(transaction: any) {
-    // Implement logic to view transaction details
-  }
-
-  deleteTransaction(id: number) {
-    // Implement logic to delete a transaction
-    this.loadTransactions(); // Refresh the list after deletion
   }
 }
