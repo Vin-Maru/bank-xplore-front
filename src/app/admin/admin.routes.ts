@@ -20,18 +20,18 @@ export const adminRoutes: Routes = [
     path: '',  // Empty path to indicate admin base
     component: AdminComponent,  // Admin layout wrapper
     children: [
-      { path: 'dashboard', component: DashboardComponent},  // Protect this route with authGuard
+      { path: 'dashboard', component: DashboardComponent ,canActivate: [AuthGuard]},  // Protect this route with authGuard
       { 
         path: 'user-management', 
-        component: UserManagementComponent,
+        component: UserManagementComponent ,canActivate: [AuthGuard],
         children: [
-          { path: 'user-details/:email', component: UserDetailsComponent },
+          { path: 'user-details/:email', component: UserDetailsComponent,canActivate: [AuthGuard] },
         ]
       },  // Protect this route with authGuard
-      { path: 'transaction', component: TransactionComponent,},  // Protect this route with authGuard
-      { path: 'logout', component: LogoutComponent,},  // Protect this route with authGuard
-      { path: 'add-bank', component: AddBankComponent,},
-      {path: 'view-banks', component: ViewBanksComponent}
+      { path: 'transaction', component: TransactionComponent,canActivate: [AuthGuard]},  // Protect this route with authGuard
+      { path: 'logout', component: LogoutComponent,canActivate: [AuthGuard]},  // Protect this route with authGuard
+      { path: 'add-bank', component: AddBankComponent,canActivate: [AuthGuard]},
+      {path: 'view-banks', component: ViewBanksComponent,canActivate: [AuthGuard]}
     ]
   }
 ];

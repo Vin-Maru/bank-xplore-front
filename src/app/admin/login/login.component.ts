@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +19,9 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;  // Loading state
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,
+    private userService: UserService
+  ) {}
 
   login() {
     if (this.email && this.password) {
@@ -38,7 +40,8 @@ export class LoginComponent {
               localStorage.setItem('authToken', token);  // Save token in local storage
               this.email = ''; // Clear email input
               this.password = ''; // Clear password input
-              this.router.navigate(['admin/dashboard']);  // Redirect to dashboard
+              this.userService.login('sample-token');
+              this.router.navigate(['/admin/dashboard']);  // Redirect to dashboard
             }
           },
           error: (err) => {

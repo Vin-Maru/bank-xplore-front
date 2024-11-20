@@ -1,33 +1,33 @@
 <div class="container">
-  <h2>Add Bank</h2>
+  <h5>Add Bank Admin</h5>
   <form class="bank-form" [formGroup]="addBankForm" (ngSubmit)="onSubmit()">
-    <!-- First Name -->
-    <div class="mb-3">
-      <label for="first_name" class="form-label">First Name</label>
-      <input type="text" id="first_name" class="form-control" formControlName="first_name">
-      <div *ngIf="addBankForm.get('first_name')?.invalid && addBankForm.get('first_name')?.touched" class="text-danger">
-        <small *ngIf="addBankForm.get('first_name')?.errors?.['required']">First name is required.</small>
+    <!-- First Name, Middle Name, Last Name -->
+    <div class="mb-3 row">
+      <div class="col">
+        <label for="first_name" class="form-label">First Name</label>
+        <input type="text" id="first_name" class="form-control" formControlName="first_name">
+        <div *ngIf="addBankForm.get('first_name')?.invalid && addBankForm.get('first_name')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('first_name')?.errors?.['required']">First name is required.</small>
+        </div>
+      </div>
+      
+      <div class="col">
+        <label for="middle_name" class="form-label">Middle Name</label>
+        <input type="text" id="middle_name" class="form-control" formControlName="middle_name">
+        <div *ngIf="addBankForm.get('middle_name')?.invalid && addBankForm.get('middle_name')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('middle_name')?.errors?.['required']">Middle name is required.</small>
+        </div>
+      </div>
+      
+      <div class="col">
+        <label for="last_name" class="form-label">Last Name</label>
+        <input type="text" id="last_name" class="form-control" formControlName="last_name">
+        <div *ngIf="addBankForm.get('last_name')?.invalid && addBankForm.get('last_name')?.touched" class="text-danger">
+          <small *ngIf="addBankForm.get('last_name')?.errors?.['required']">Last name is required.</small>
+        </div>
       </div>
     </div>
-
-    <!-- Middle Name -->
-    <div class="mb-3">
-      <label for="middle_name" class="form-label">Middle Name</label>
-      <input type="text" id="middle_name" class="form-control" formControlName="middle_name">
-      <div *ngIf="addBankForm.get('middle_name')?.invalid && addBankForm.get('middle_name')?.touched" class="text-danger">
-        <small *ngIf="addBankForm.get('middle_name')?.errors?.['required']">Middle name is required.</small>
-      </div>
-    </div>
-
-    <!-- Last Name -->
-    <div class="mb-3">
-      <label for="last-name" class="form-label">Last Name</label>
-      <input type="text" id="last_name" class="form-control" formControlName="last_name">
-      <div *ngIf="addBankForm.get('last_name')?.invalid && addBankForm.get('last_name')?.touched" class="text-danger">
-        <small *ngIf="addBankForm.get('last_name')?.errors?.['required']">Last name is required.</small>
-      </div>
-    </div>
-
+    
     <!-- Email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
@@ -42,18 +42,14 @@
     <div class="mb-3">
       <label for="phone_no" class="form-label">Phone Number</label>
       <div class="input-group">
-        <select class="form-select" aria-label="Country code">
-          <option value="+254">+254</option>
-          <option value="+1">+1</option>
-          <option value="+44">+44</option>
-          <!-- Add other country codes as needed -->
-        </select>
         <input type="text" id="phone_no" class="form-control" formControlName="phone_no" placeholder="Enter phone number">
       </div>
       <div *ngIf="addBankForm.get('phone_no')?.invalid && addBankForm.get('phone_no')?.touched" class="text-danger">
         <small *ngIf="addBankForm.get('phone_no')?.errors?.['required']">Phone number is required.</small>
       </div>
     </div>
+
+    <!-- Bank Name -->
     <div class="mb-3">
       <label for="bankName" class="form-label">Bank Name</label>
       <input type="text" id="bankName" class="form-control" formControlName="bankName">
@@ -71,8 +67,7 @@
         <small *ngIf="addBankForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
       </div>
     </div>
-  
-
-    <button type="submit" class="btn btn-primary">Add Bank</button>
+    
+    <button type="submit" class="btn btn-primary w-100">Add Bank</button>
   </form>
 </div>

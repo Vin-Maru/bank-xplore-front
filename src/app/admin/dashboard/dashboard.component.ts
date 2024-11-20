@@ -6,17 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   standalone: true,
   selector: 'app-dashboard',
-  imports:[HttpClientModule],
+  imports: [HttpClientModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   allUsers: any[] = [];
-  numberOfUsers: number = 0;
+  numberOfUsers:number | null = null;
   numberOfNotifications: number = 0;
   totalTransactions: number = 0;
-  usersWaitingApproval: number = 0;
-  notificationCount: number = 0;
+  pendingApproval: number | null = null; // For displaying pending approvals count
+  notificationCount: number | null = null;
 
   constructor(
     private userService: UserService, // Inject the existing UserService
@@ -24,17 +24,15 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetch users using the UserService
-    this.fetchUsers();
-    this.pendingApproval();
-   
-    // Example static data for other dashboard elements
-    this.notificationCount = 3;
-    this.totalTransactions = 50;
+    this.fetchUsers(); // Fetch total users
+    this.loadPendingApproval(); // Fetch pending approvals
 
+    // Example static data for other dashboard elements
+   
+    this.totalTransactions = 50;
   }
 
-  // Use the UserService to fetch the users
+  // Fetch all users and set their count
   fetchUsers(): void {
     this.userService.fetchUsers().subscribe(
       (response) => {
@@ -50,16 +48,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-
-
-  // Method to get the count of users with 'Deactivated' status
-  pendingApproval(): void {
+  // Fetch count of pending approval users
+  loadPendingApproval(): void {
     this.userService.fetchPendingApprovalUsers().subscribe(
-      count => {
-        this.pendingApproval = count;  // Set the count of pending users
-        console.log('Pending Approval Users:',);
+      (count) => {
+        this.pendingApproval = count; // Set the count of pending users
+        console.log('Pending Approval Users:', count);
       },
-      error => {
+      (error) => {
         console.error('Error fetching pending approval users:', error);
       }
     );

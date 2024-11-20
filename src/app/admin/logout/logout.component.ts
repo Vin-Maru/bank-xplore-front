@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';  // For common Angular directives
-
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-logout',
   standalone: true,  // Marking this component as standalone
@@ -43,7 +43,7 @@ import { CommonModule } from '@angular/common';  // For common Angular directive
   `]
 })
 export class LogoutComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
     this.logout();
   }
 
@@ -51,7 +51,7 @@ export class LogoutComponent {
     // Clear session-related data (e.g., token)
     localStorage.removeItem('token');
     sessionStorage.clear();
-
+    this.userService.logout();
     // Delay before navigating to the home page
     setTimeout(() => {
       console.log('Logging out in a few..');

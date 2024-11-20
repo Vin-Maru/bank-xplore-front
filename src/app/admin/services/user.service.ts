@@ -1,8 +1,9 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; // <-- Import map operator
 import { isPlatformBrowser } from '@angular/common';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,14 +57,15 @@ export class UserService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-
+  
     const payload = {
       email: email,
-      verified: false, // Set verified to false to decline the user
+      verified: false, // Decline logic, confirm with backend
     };
-
+  
     return this.http.post<any>(`${this.apiUrl}/kyc/admin/verify`, payload, { headers });
   }
+  
 
   // Fetch users with 'Deactivated' account status
   fetchPendingApprovalUsers(): Observable<any> {
@@ -96,16 +98,24 @@ export class UserService {
     return this.http.delete(url);
   }
   bankTransaction(): Observable<any[]> {
-    const token = this.getAuthToken();
+    const token = this.getAuthToken(); // Get the token from your storage
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-  
-    const url = '${/banking/kcb/transactions/view/all?page=0&size=20}';
+    const url = `${this.apiUrl}/banking/kcb/transactions/view/all?page=0&size=20`;
     return this.http.get<any[]>(url, { headers });
   }
   
+  login(token: string): void {
+    localStorage.setItem('token', token);
+  }
+ 
+
+
+  logout(): void {
+    localStorage.removeItem('token');
+  }
   
   // Helper method to get the token with platform check
   private getAuthToken(): string | null {

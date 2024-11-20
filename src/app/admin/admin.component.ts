@@ -12,6 +12,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   styleUrls: ['./admin.component.css'],
   templateUrl: `admin.component.html`,
   standalone: true,
-  imports: [SidebarComponent, NavbarComponent,RouterOutlet, FooterComponent, RouterModule], // Include necessary modules and components
+  imports: [ NavbarComponent,RouterOutlet, RouterModule], // Include necessary modules and components
 })
 export class AdminComponent {}

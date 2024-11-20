@@ -6,7 +6,7 @@
         <div class="card-header">Users</div>
         <div class="card-body">
           <h5 class="card-title">Number of Users</h5>
-          <p class="card-text">{{ numberOfUsers }}</p> <!-- Dynamic data -->
+          <p class="card-text">{{ numberOfUsers === null ? 'Loading...' : numberOfUsers }}</p> <!-- Dynamic data -->
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="card-header">Notifications</div>
         <div class="card-body">
           <h5 class="card-title">New Notifications</h5>
-          <p class="card-text">{{ notificationCount }}</p> <!-- Dynamic data -->
+          <p class="card-text">{{ pendingApproval === null ? 'Loading...' : pendingApproval }}</p> <!-- Dynamic data -->
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="card-header">Users Waiting Approval</div>
         <div class="card-body">
           <h5 class="card-title">Pending Approvals</h5>
-          <p class="card-text">{{ pendingApproval }}</p> <!-- Dynamic data -->
+          <p class="card-text">{{ pendingApproval === null ? 'Loading...' : pendingApproval }}</p> <!-- Dynamic data -->
         </div>
       </div>
     </div>

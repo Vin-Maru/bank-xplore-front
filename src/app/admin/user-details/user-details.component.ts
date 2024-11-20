@@ -81,37 +81,24 @@ export class UserDetailsComponent implements OnInit {
 
   declineUser(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.userService.declineUser(this.user.email).subscribe(
-      () => {
+  
+    this.userService.declineUser(this.user.email).subscribe({
+      next: () => {
         this.user.account_status = 'Declined'; // Update the user status in the UI
-        this.router.navigate(['admin/user-management']); 
-
+        this.router.navigate(['admin/user-management']);
+  
         this.snackBar.open('User declined successfully!', 'Close', {
           duration: 3000,
-
         });
       },
-      (error) => {
-        console.error('Error declining user:', error);
-        this.snackBar.open('Error declining user', 'Close', { duration: 3000 });
-      }
-    );
-  }
-
-  onDelete(email: string): void {
-    this.userService.deleteUser(email).subscribe({
-      next: (response) => {
-        console.log('User deleted successfully', response);
-        // Optional: Refresh the user list or display a success message
-        this.router.navigate(['admin/user-management']); 
-      },
       error: (error) => {
-        console.error('Error in deleting user:', error);
+        console.error('Error declining user:', error.error || error);
+        this.snackBar.open('Error declining user. Please try again.', 'Close', { duration: 3000 });
       },
     });
   }
   
+
 
   closeOverlay(): void {
     this.close.emit(); // Emits event to close overlay if needed in parent
