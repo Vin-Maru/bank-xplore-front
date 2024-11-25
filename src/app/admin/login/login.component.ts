@@ -40,7 +40,6 @@ export class LoginComponent {
               localStorage.setItem('authToken', token);  // Save token in local storage
               this.email = ''; // Clear email input
               this.password = ''; // Clear password input
-              this.userService.login('sample-token');
               this.router.navigate(['/admin/dashboard']);  // Redirect to dashboard
             }
           },
@@ -61,11 +60,5 @@ export class LoginComponent {
     } else {
       this.errorMessage = 'Please fill in both email and password';
     }
-  }
-
-  // Optional: Implement logout method
-  logout() {
-    localStorage.removeItem('authToken'); // Clear token
-    this.router.navigate(['/login']); // Redirect to login page
   }
 }

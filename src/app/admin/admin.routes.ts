@@ -4,10 +4,9 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { TransactionComponent } from './transaction/transaction.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
-import { AuthGuard } from '../auth.guard';
+import { AuthGuard } from './auth.guard';
 import { ViewBanksComponent } from './viewbank/viewbank.component';
 
 
@@ -29,7 +28,6 @@ export const adminRoutes: Routes = [
         ]
       },  // Protect this route with authGuard
       { path: 'transaction', component: TransactionComponent,canActivate: [AuthGuard]},  // Protect this route with authGuard
-      { path: 'logout', component: LogoutComponent,canActivate: [AuthGuard]},  // Protect this route with authGuard
       { path: 'add-bank', component: AddBankComponent,canActivate: [AuthGuard]},
       {path: 'view-banks', component: ViewBanksComponent,canActivate: [AuthGuard]}
     ]

@@ -1,7 +1,8 @@
 <div *ngIf="user; else loading" class="user-details-card">
   <div class="header">
-  <h2>{{user.first_name}} Details   </h2>
+  <h2 mat-dialog-title>{{user.first_name}} Details   </h2>
   </div>
+  <mat-dialog-content>
   <div class="user-info">
     <div class="info-group">
       <label>First Name:</label>
@@ -40,13 +41,15 @@
       <span>No documents available.</span>
     </ng-template>
   </div>
-
-  <div class="action-buttons">
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="action-buttons">
     <button class="approve" (click)="approveUser()">Approve</button>
     <button class="decline" (click)="declineUser()">Decline</button>
      <button class="decline" (click)="closeOverlay()">Close</button>
-
   </div>
+</mat-dialog-actions>
+
 </div>
 <ng-template #loading>
   <p>Loading user details...</p>

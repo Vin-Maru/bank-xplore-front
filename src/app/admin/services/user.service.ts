@@ -106,15 +106,9 @@ export class UserService {
     const url = `${this.apiUrl}/banking/kcb/transactions/view/all?page=0&size=20`;
     return this.http.get<any[]>(url, { headers });
   }
-  
-  login(token: string): void {
-    localStorage.setItem('token', token);
-  }
- 
 
-
-  logout(): void {
-    localStorage.removeItem('token');
+  islogout(): void {
+    localStorage.removeItem('authToken');
   }
   
   // Helper method to get the token with platform check

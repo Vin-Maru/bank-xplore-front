@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from '../notification/notification.service';
-
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -20,7 +20,9 @@ export class NavbarComponent {
   notificationCount: number = 0;
 
 
-  constructor(private notificationService: NotificationService,
+  constructor(
+    private userService: UserService,
+    private notificationService: NotificationService,
     private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
 
@@ -60,7 +62,15 @@ export class NavbarComponent {
     this.isMenuOpen = false;
     this.isDropdownOpen = false; // Also close the dropdown
   }
+  logout() {
+    this.userService.islogout();
+    sessionStorage.clear();
+    setTimeout(() => {
+      console.log('Logging out in a few..');
+      this.router.navigate(['/admin/login']); // Redirect to the dashboard
+    }, 500);   // 2-second delay
 
+  }
   // HostListener listens to the scroll event for styling the navbar
   @HostListener('window:scroll', [])
   onWindowScroll() {

@@ -3,7 +3,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './admin/login/login.component';
 import { ClientComponent } from './client/client.component';
 import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to HomeComponent when the app starts

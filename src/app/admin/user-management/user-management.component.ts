@@ -1,26 +1,25 @@
-// src/app/user-management/user-management.component.ts
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../services/user.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
+import { UserDetailsComponent } from '../user-details/user-details.component'; // Import UserDetailsComponent
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
-  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
+  imports: [FormsModule, CommonModule, RouterModule],
 })
 export class UserManagementComponent implements OnInit {
   allUsers: any[] = [];
   searchTerm: string = '';
-  isOverlayVisible: boolean = true;
-  showOverlay: boolean = true;
 
   constructor(
+    private dialog: MatDialog, // Inject MatDialog service
     private userService: UserService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -56,16 +55,15 @@ export class UserManagementComponent implements OnInit {
       user.user.phone_no?.includes(this.searchTerm)
     );
   }
-  
+
+  // Method to open the UserDetailsComponent as a popup
   viewUserDetails(user: any): void {
-    console.log('Navigating to user-details with email:', user.user.email);
-    this.isOverlayVisible = false;
+    console.log('Opening UserDetails popup for:', user.user.email);
 
-    this.router.navigate(['admin/user-management/user-details', user.user.email]);
-  }
-
-  closeOverlay(): void {
-    this.isOverlayVisible = true;
-    this.router.navigate(['admin/user-management']);
+    // Open the UserDetailsComponent as a dialog
+    this.dialog.open(UserDetailsComponent, {
+      width: '500px', // Adjust width as needed
+      data: user // Pass user data to UserDetailsComponent
+    });
   }
 }
