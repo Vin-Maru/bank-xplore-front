@@ -3,8 +3,11 @@
 
   <div class="table-container">
     <h3 style="display: flex; justify-content: space-between; align-items: center;">
-      All Users
+       Users
       <!-- Input for searching by phone number -->
+      <div class="summary">
+        <h3>Total Users: {{ filteredUsers.length }}</h3>
+      </div>
       <input 
         type="text" 
         [(ngModel)]="searchTerm" 
@@ -12,8 +15,9 @@
         class="form-control mb-3" 
         style="width: 250px;" 
       />
+      
     </h3>
-
+   
     <table class="user-table">
       <thead>
         <tr>
@@ -38,10 +42,9 @@
         </tr>
       </tbody>
     </table>
+    
   </div>
 
-  <div class="summary">
-    <h3>Total Users: {{ filteredUsers.length }}</h3>
-  </div>
+ 
   <router-outlet></router-outlet>
 </div>

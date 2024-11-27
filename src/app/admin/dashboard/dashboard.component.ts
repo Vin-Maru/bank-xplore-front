@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   allUsers: any[] = [];
   numberOfUsers:number | null = null;
   numberOfNotifications: number = 0;
-  totalTransactions: number = 0;
+  totalTransactions:number | null = null;
   pendingApproval: number | null = null; // For displaying pending approvals count
   notificationCount: number | null = null;
 
@@ -26,10 +26,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUsers(); // Fetch total users
     this.loadPendingApproval(); // Fetch pending approvals
-
+    this.fetchTotalTransactions();
     // Example static data for other dashboard elements
    
-    this.totalTransactions = 50;
   }
 
   // Fetch all users and set their count
@@ -57,6 +56,16 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching pending approval users:', error);
+      }
+    );
+  }
+  fetchTotalTransactions(): void {
+    this.userService.totalTransactions().subscribe(
+      (count: number) => {
+        this.totalTransactions = count;
+      },
+      (error) => {
+        console.error('Error fetching total transactions:', error);
       }
     );
   }

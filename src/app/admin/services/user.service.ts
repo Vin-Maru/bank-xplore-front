@@ -5,6 +5,29 @@ import { map } from 'rxjs/operators'; // <-- Import map operator
 import { isPlatformBrowser } from '@angular/common';
 import { of } from 'rxjs';
 
+
+
+interface Transaction {
+  
+  transaction_id: string;
+  userId: number;
+  transactionType: string;
+  sender_phone_no: string;
+  sender_id: string;
+  sender_bank_code: string;
+  receiver_phone_no: string;
+  receiver_id: string;
+  receiver_bank_code: string;
+  amount: number;
+  currency: string;
+  reference_note: string;
+  transaction_fee: number;
+}
+
+interface TransactionResponse {
+  content: Transaction[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -97,15 +120,28 @@ export class UserService {
     const url = `${this.apiUrl}/kyc/delete/?email=${email}`; // Use backticks for template literals
     return this.http.delete(url);
   }
-  bankTransaction(): Observable<any[]> {
+  bankTransactions(): Observable<TransactionResponse> {
     const token = this.getAuthToken(); // Get the token from your storage
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-    const url = `${this.apiUrl}/banking/kcb/transactions/view/all?page=0&size=20`;
-    return this.http.get<any[]>(url, { headers });
+    const url = `${this.apiUrl}/transactions/all?page=0&size=10`;
+    return this.http.get<TransactionResponse>(url, { headers });
   }
+
+  totalTransactions(): Observable<number> {
+    const token = this.getAuthToken(); // Get the token from your storage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    const url = `${this.apiUrl}/transactions/all?page=0&size=1`; // Fetch only 1 item to minimize data transfer
+    return this.http.get<{ totalElements: number }>(url, { headers }).pipe(
+      map((response) => response.totalElements) // Map the total count from the response
+    );
+  }
+  
 
   islogout(): void {
     localStorage.removeItem('authToken');

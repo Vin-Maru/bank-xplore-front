@@ -1,31 +1,58 @@
-<div>
-  <h3>Bank Transactions</h3>
+<div class="table-container">
+  <div class="top">
+    <h3 class="header">Bank Transactions</h3>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search transaction ID"
+      class="search-input"
+      style="width: 250px;"
+    />
+    <button (click)="searchTransaction()" class="search-button">Search</button>
+  </div>
 
-  <div *ngIf="transactions.length > 0; else noTransactions">
-    <table>
+  <div *ngIf="filteredTransactions.length > 0; else noTransactions">
+    <table class="user-table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>User</th>
+          <th>Transaction ID</th>
+          <th>Transaction Type</th>
+          <th>Sender Phone Number</th>
+          <th>Sender ID</th>
+          <th>Sender Bank Code</th>
+          <th>Receiver Phone Number</th>
+          <th>Receiver ID</th>
+          <th>Receiver Bank Code</th>
           <th>Amount</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th>Currency</th>
+          <th>Reference Note</th>
+          <th>Transaction Fee</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let transaction of transactions">
-          <td>{{ transaction.id }}</td>
-          <td>{{ transaction.user }}</td>
+        <tr *ngFor="let transaction of filteredTransactions">
+          <td>{{ transaction.transaction_id }}</td>
+          <td>{{ transaction.transactionType }}</td>
+          <td>{{ transaction.sender_phone_no }}</td>
+          <td>{{ transaction.sender_id }}</td>
+          <td>{{ transaction.sender_bank_code }}</td>
+          <td>{{ transaction.receiver_phone_no }}</td>
+          <td>{{ transaction.receiver_id }}</td>
+          <td>{{ transaction.receiver_bank_code }}</td>
           <td>{{ transaction.amount }}</td>
-          <td>{{ transaction.date }}</td>
-          <td>{{ transaction.status }}</td>
+          <td>{{ transaction.currency }}</td>
+          <td>{{ transaction.reference_note }}</td>
+          <td>{{ transaction.transaction_fee }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <!-- Display a message when no transactions are found -->
   <ng-template #noTransactions>
-    <p>No transactions available.</p>
+    <div class="no-results">
+      No transactions found for the entered ID.
+    </div>
   </ng-template>
 
   <!-- Display error message -->

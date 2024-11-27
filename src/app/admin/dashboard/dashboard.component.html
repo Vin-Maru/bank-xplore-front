@@ -28,7 +28,7 @@
         <div class="card-header">Transactions</div>
         <div class="card-body">
           <h5 class="card-title">Total Transactions</h5>
-          <p class="card-text">{{ totalTransactions }}</p> <!-- Dynamic data -->
+          <p class="card-text">{{ totalTransactions === null ? 'Loading...' : totalTransactions }}</p> <!-- Dynamic data -->
         </div>
       </div>
     </div>

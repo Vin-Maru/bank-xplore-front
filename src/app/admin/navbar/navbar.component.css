@@ -3,7 +3,6 @@
  
   color: antiquewhite;
   margin-top: 0px;
-  
   margin-bottom: 0%;
   border-radius: 1px;
   justify-content: space-between;
@@ -62,7 +61,7 @@
     top: 60px;
     background-color:#031518;
     right: 0;
-    width: auto;
+    max-width: 100%;
     padding: 20px;
     z-index: 1000;
     border-radius: 5px;
