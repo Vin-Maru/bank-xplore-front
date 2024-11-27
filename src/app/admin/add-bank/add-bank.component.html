@@ -2,8 +2,8 @@
   <h5>Add Bank Admin</h5>
   <form class="bank-form" [formGroup]="addBankForm" (ngSubmit)="onSubmit()">
     <!-- First Name, Middle Name, Last Name -->
-    <div class="mb-3 row">
-      <div class="col">
+    
+      <div class="mb-3">
         <label for="first_name" class="form-label">First Name</label>
         <input type="text" id="first_name" class="form-control" formControlName="first_name">
         <div *ngIf="addBankForm.get('first_name')?.invalid && addBankForm.get('first_name')?.touched" class="text-danger">
@@ -11,7 +11,7 @@
         </div>
       </div>
       
-      <div class="col">
+      <div class="mb-3">
         <label for="middle_name" class="form-label">Middle Name</label>
         <input type="text" id="middle_name" class="form-control" formControlName="middle_name">
         <div *ngIf="addBankForm.get('middle_name')?.invalid && addBankForm.get('middle_name')?.touched" class="text-danger">
@@ -19,14 +19,14 @@
         </div>
       </div>
       
-      <div class="col">
+      <div class="mb-3">
         <label for="last_name" class="form-label">Last Name</label>
         <input type="text" id="last_name" class="form-control" formControlName="last_name">
         <div *ngIf="addBankForm.get('last_name')?.invalid && addBankForm.get('last_name')?.touched" class="text-danger">
           <small *ngIf="addBankForm.get('last_name')?.errors?.['required']">Last name is required.</small>
         </div>
       </div>
-    </div>
+   
     
     <!-- Email -->
     <div class="mb-3">
@@ -41,9 +41,8 @@
     <!-- Phone Number with Country Code -->
     <div class="mb-3">
       <label for="phone_no" class="form-label">Phone Number</label>
-      <div class="input-group">
         <input type="text" id="phone_no" class="form-control" formControlName="phone_no" placeholder="Enter phone number">
-      </div>
+      
       <div *ngIf="addBankForm.get('phone_no')?.invalid && addBankForm.get('phone_no')?.touched" class="text-danger">
         <small *ngIf="addBankForm.get('phone_no')?.errors?.['required']">Phone number is required.</small>
       </div>

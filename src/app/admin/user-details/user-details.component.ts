@@ -71,6 +71,7 @@ export class UserDetailsComponent implements OnInit {
   approveUser(): void {
     this.userService.approveUser(this.user.email).subscribe(
       () => {
+        this.router.navigate(['admin/user-management']);
         this.user.account_status = 'Approved';
         this.snackBar.open('User approved successfully!', 'Close', {
           duration: 3000,
@@ -86,6 +87,7 @@ export class UserDetailsComponent implements OnInit {
   declineUser(): void {
     this.userService.declineUser(this.user.email).subscribe({
       next: () => {
+        this.router.navigate(['admin/user-management']);
         this.user.account_status = 'Declined';
         this.snackBar.open('User declined successfully!', 'Close', { duration: 3000 });
         this.dialogRef.close(); // Close the dialog on success

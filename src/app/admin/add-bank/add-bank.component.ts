@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-bank',
   standalone:true,
@@ -15,6 +16,7 @@ export class AddBankComponent implements OnInit {
   addBankForm!: FormGroup;
 
   constructor(
+    private router : Router,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private userService:UserService // InjectUserService
@@ -52,6 +54,7 @@ export class AddBankComponent implements OnInit {
       // Call theUserService to create a bank
       this.userService.createBank(payload).subscribe(
         (response) => {
+        this.router.navigate(['admin/user-management']);
           console.log('Bank created successfully:', response);
           // Show a success message
           this.snackBar.open('Bank created successfully!', 'Close', {
@@ -62,6 +65,7 @@ export class AddBankComponent implements OnInit {
           this.addBankForm.reset();
         },
         (error) => {
+          this.router.navigate(['admin/user-management']);
           console.error('Error creating bank:', error);
           this.snackBar.open('Failed to create bank. Please try again.', 'Close', {
             duration: 3000,
